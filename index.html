@@ -16,10 +16,8 @@
             text-align: center;
             font-family: Arial, sans-serif;
             color: white;
-            transition: opacity 1s;
         }
         #content {
-            display: none;
             width: 90%;
             max-width: 600px;
             background: rgba(0, 0, 0, 0.7);
@@ -29,20 +27,14 @@
         .question-container {
             display: none;
         }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
         button {
             border: none;
             padding: 10px;
+            margin: 10px;
             font-size: 18px;
             cursor: pointer;
             border-radius: 5px;
             transition: all 0.3s ease;
-            width: 120px;
-            height: 50px;
         }
         .yes {
             background: green;
@@ -52,10 +44,7 @@
             background: red;
             color: white;
         }
-        #gif-container {
-            display: none;
-        }
-        #video-container {
+        #gif-container, #video-container {
             display: none;
         }
     </style>
@@ -77,25 +66,44 @@
 <!-- Interactive Questions -->
 <div id="questions">
     <div class="question-container">
-        <h3>Are you still mad at me? 🥹</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
+        <h3>Hey baby, I miss you, do you care to check up on me? 😔</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
     </div>
     <div class="question-container">
-        <h3>For reals? 😢</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
+        <h3>Wow, uhm... are you still mad at me?</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
     </div>
     <div class="question-container">
-        <h3>Do you want to talk to me? 🥺</h3>
-        <div class="button-container">
-            <button class="yes" onclick="forgiveMe()">Yes</button>
-            <button class="no" onclick="showVideo()">No</button>
-        </div>
+        <h3>Do you want to talk with me?</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
+    </div>
+    <div class="question-container">
+        <h3>For reals? 🤨</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
+    </div>
+    <div class="question-container">
+        <h3>If I asked for a hug now, would you give me?</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
+    </div>
+    <div class="question-container">
+        <h3>Do you even miss me?</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
+    </div>
+    <div class="question-container">
+        <h3>Breaking down, while coding this... Uhm can I call you?</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
+    </div>
+    <div class="question-container">
+        <h3>I miss you sm, do you wanna speak w me?</h3>
+        <button class="yes" onclick="forgiveMe()">Yes</button>
+        <button class="no" onclick="showVideo()">No</button>
     </div>
 </div>
 
@@ -108,7 +116,7 @@
 <!-- Surprise Video -->
 <div id="video-container">
     <video width="90%" controls autoplay>
-        <source src="YOUR_VIDEO_LINK" type="video/mp4">
+        <source src="https://drive.google.com/uc?export=download&id=114p_FYiedXmuPpx6lyF0x8gEHyaw4mMJ" type="video/mp4">
         Your browser does not support the video tag.
     </video>
     <h2>No matter what, I love you. I'm here when you're ready ❤️.</h2>
@@ -116,15 +124,15 @@
 
 <!-- Background Music -->
 <audio id="background-music" loop autoplay>
-    <source src="YOUR_MUSIC_LINK" type="audio/mp3">
+    <source src="https://drive.google.com/uc?export=download&id=1fSaZfdc2bPgLJR4kZTDndMN_A4YIvH_b" type="audio/mp3">
 </audio>
 
 <script>
     let currentQuestion = 0;
     const questions = document.querySelectorAll('.question-container');
-    let yesSize = 120;  
-    let noSize = 120;
-
+    const yesButtons = document.querySelectorAll('.yes');
+    const noButtons = document.querySelectorAll('.no');
+    
     function startQuestions() {
         document.getElementById('content').style.display = 'none';
         questions[currentQuestion].style.display = 'block';
@@ -132,38 +140,17 @@
 
     function nextQuestion(answeredYes) {
         questions[currentQuestion].style.display = 'none';
-
-        if (!answeredYes) {
-            yesSize += 20;  
-            noSize -= 10;   
-
-            if (noSize < 40) noSize = 40;  
-
-            let buttonContainer = questions[currentQuestion].querySelector('.button-container');
-            let yesButton = buttonContainer.querySelector('.yes');
-            let noButton = buttonContainer.querySelector('.no');
-
-            yesButton.style.fontSize = (yesSize / 6) + 'px';
-            yesButton.style.width = yesSize + 'px';
-            yesButton.style.height = yesSize * 0.5 + 'px';
-
-            noButton.style.fontSize = (noSize / 6) + 'px';
-            noButton.style.width = noSize + 'px';
-            noButton.style.height = noSize * 0.5 + 'px';
-
-            // Swap positions
-            let buttons = [yesButton, noButton];
-            buttonContainer.innerHTML = ''; 
-            buttonContainer.appendChild(buttons[Math.floor(Math.random() * 2)]);
-            buttonContainer.appendChild(buttons[1 - buttons.indexOf(buttonContainer.firstChild)]);
-        } 
-
         currentQuestion++;
 
         if (currentQuestion < questions.length) {
             questions[currentQuestion].style.display = 'block';
+
+            if (!answeredYes) {
+                adjustButtonSizes();
+                swapButtons();
+            }
         } else {
-            forgiveMe();
+            showVideo();
         }
     }
 
@@ -177,6 +164,30 @@
         document.getElementById('video-container').style.display = 'block';
     }
 
+    function adjustButtonSizes() {
+        yesButtons.forEach(btn => {
+            let currentSize = parseFloat(window.getComputedStyle(btn).fontSize);
+            btn.style.fontSize = (currentSize + 2) + "px";
+        });
+
+        noButtons.forEach(btn => {
+            let currentSize = parseFloat(window.getComputedStyle(btn).fontSize);
+            btn.style.fontSize = Math.max(currentSize - 2, 10) + "px";
+        });
+    }
+
+    function swapButtons() {
+        noButtons.forEach(btn => {
+            let parent = btn.parentElement;
+            let yesBtn = parent.querySelector(".yes");
+
+            if (yesBtn && btn) {
+                parent.insertBefore(btn, yesBtn);
+            }
+        });
+    }
+
+    // Ensure the first question appears after 5 seconds
     setTimeout(() => {
         document.getElementById('content').style.display = 'block';
     }, 5000);
