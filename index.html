@@ -83,6 +83,20 @@
             <button class="no" onclick="nextQuestion(false)">No</button>
         </div>
     </div>
+    <div class="question-container">
+        <h3>For reals? 😢</h3>
+        <div class="button-container">
+            <button class="yes" onclick="nextQuestion(true)">Yes</button>
+            <button class="no" onclick="nextQuestion(false)">No</button>
+        </div>
+    </div>
+    <div class="question-container">
+        <h3>Do you want to talk to me? 🥺</h3>
+        <div class="button-container">
+            <button class="yes" onclick="forgiveMe()">Yes</button>
+            <button class="no" onclick="showVideo()">No</button>
+        </div>
+    </div>
 </div>
 
 <!-- GIF Response -->
@@ -142,6 +156,12 @@
             buttonContainer.innerHTML = ''; 
             buttonContainer.appendChild(buttons[Math.floor(Math.random() * 2)]);
             buttonContainer.appendChild(buttons[1 - buttons.indexOf(buttonContainer.firstChild)]);
+        } 
+
+        currentQuestion++;
+
+        if (currentQuestion < questions.length) {
+            questions[currentQuestion].style.display = 'block';
         } else {
             forgiveMe();
         }
