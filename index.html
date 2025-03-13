@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('YOUR_BACKGROUND_IMAGE_LINK') no-repeat center center/cover;
+            background: url('https://files.catbox.moe/qzs95x.jpeg') no-repeat center center/cover;
             text-align: center;
             font-family: Arial, sans-serif;
             color: white;
@@ -42,6 +42,7 @@
             border-radius: 5px;
             transition: all 0.3s ease;
             width: 120px;
+            height: 50px;
         }
         .yes {
             background: green;
@@ -82,55 +83,6 @@
             <button class="no" onclick="nextQuestion(false)">No</button>
         </div>
     </div>
-    <div class="question-container">
-        <h3>For reals? 🤨</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
-    </div>
-    <div class="question-container">
-        <h3>Do you think I deserve forgiveness? 😭</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
-    </div>
-    <div class="question-container">
-        <h3>Do you miss me even a little? 😢</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
-    </div>
-    <div class="question-container">
-        <h3>If I promise to make it up to you, will you forgive me? 💖</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
-    </div>
-    <div class="question-container">
-        <h3>Remember how happy we are together? 🥰</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
-    </div>
-    <div class="question-container">
-        <h3>Can we at least talk things out? 🥺</h3>
-        <div class="button-container">
-            <button class="yes" onclick="nextQuestion(true)">Yes</button>
-            <button class="no" onclick="nextQuestion(false)">No</button>
-        </div>
-    </div>
-    <div class="question-container">
-        <h3>Do you want to talk to me? 😖</h3>
-        <div class="button-container">
-            <button class="yes" onclick="forgiveMe()">Yes</button>
-            <button class="no" onclick="showVideo()">No</button>
-        </div>
-    </div>
 </div>
 
 <!-- GIF Response -->
@@ -156,8 +108,8 @@
 <script>
     let currentQuestion = 0;
     const questions = document.querySelectorAll('.question-container');
-    let yesSize = 18; 
-    let noSize = 18;
+    let yesSize = 120;  
+    let noSize = 120;
 
     function startQuestions() {
         document.getElementById('content').style.display = 'none';
@@ -166,32 +118,32 @@
 
     function nextQuestion(answeredYes) {
         questions[currentQuestion].style.display = 'none';
-        currentQuestion++;
 
-        if (currentQuestion < questions.length) {
-            questions[currentQuestion].style.display = 'block';
+        if (!answeredYes) {
+            yesSize += 20;  
+            noSize -= 10;   
 
-            if (!answeredYes) {
-                yesSize += 7;  
-                noSize -= 5;   
+            if (noSize < 40) noSize = 40;  
 
-                if (noSize < 10) noSize = 10;  
+            let buttonContainer = questions[currentQuestion].querySelector('.button-container');
+            let yesButton = buttonContainer.querySelector('.yes');
+            let noButton = buttonContainer.querySelector('.no');
 
-                let buttonContainer = questions[currentQuestion].querySelector('.button-container');
-                let yesButton = buttonContainer.querySelector('.yes');
-                let noButton = buttonContainer.querySelector('.no');
+            yesButton.style.fontSize = (yesSize / 6) + 'px';
+            yesButton.style.width = yesSize + 'px';
+            yesButton.style.height = yesSize * 0.5 + 'px';
 
-                yesButton.style.fontSize = yesSize + 'px';
-                noButton.style.fontSize = noSize + 'px';
+            noButton.style.fontSize = (noSize / 6) + 'px';
+            noButton.style.width = noSize + 'px';
+            noButton.style.height = noSize * 0.5 + 'px';
 
-                // Swap positions
-                let buttons = [yesButton, noButton];
-                buttonContainer.innerHTML = ''; 
-                buttonContainer.appendChild(buttons[Math.floor(Math.random() * 2)]);
-                buttonContainer.appendChild(buttons[1 - buttons.indexOf(buttonContainer.firstChild)]);
-            }
+            // Swap positions
+            let buttons = [yesButton, noButton];
+            buttonContainer.innerHTML = ''; 
+            buttonContainer.appendChild(buttons[Math.floor(Math.random() * 2)]);
+            buttonContainer.appendChild(buttons[1 - buttons.indexOf(buttonContainer.firstChild)]);
         } else {
-            showVideo();
+            forgiveMe();
         }
     }
 
