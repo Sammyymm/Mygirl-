@@ -5,13 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>I'm Sorry, My Love</title>
   <style>
-    /* Reset and base styling */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-    /* Set a background image for the body */
     body {
       font-family: Arial, sans-serif;
       background: url('https://example.com/your-background.jpg') no-repeat center center/cover;
@@ -21,7 +19,6 @@
       justify-content: center;
       color: #fff;
     }
-    /* Container to improve readability (semi-transparent dark background) */
     .container {
       background: rgba(0, 0, 0, 0.8);
       padding: 20px;
@@ -30,9 +27,7 @@
       max-width: 600px;
       text-align: center;
     }
-    /* Button styling */
     button {
-      background-color: #ff69b4;
       border: none;
       padding: 10px 20px;
       font-size: 18px;
@@ -41,25 +36,29 @@
       cursor: pointer;
       transition: transform 0.3s, font-size 0.3s;
     }
-    /* Ensure images and videos fit well */
+    .yes {
+      background-color: #28a745; /* Green */
+      color: white;
+    }
+    .no {
+      background-color: #dc3545; /* Red */
+      color: white;
+    }
     img, video {
       max-width: 100%;
       border-radius: 10px;
     }
-    /* Initially hide all sections except the background */
     #content, #questions, #gif-container, #video-container {
       display: none;
     }
   </style>
 </head>
 <body>
-  <!-- Background Music (plays automatically) -->
   <audio id="bg-music" loop autoplay>
     <source src="https://drive.google.com/uc?export=download&id=1fSaZfdc2bPgLJR4kZTDndMN_A4YIvH_b" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
 
-  <!-- Apology Letter Section -->
   <div id="content" class="container">
     <h2>My Love, I'm Sorry...</h2>
     <p>
@@ -71,9 +70,7 @@
     <button onclick="startQuestions()">Continue</button>
   </div>
 
-  <!-- Interactive Questions Section -->
   <div id="questions" class="container">
-    <!-- Each question is in its own container -->
     <div class="question-container">
       <h3>Are you still mad at me? 🥹</h3>
       <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
@@ -116,13 +113,11 @@
     </div>
   </div>
 
-  <!-- GIF Response Section (if she forgives) -->
   <div id="gif-container" class="container">
     <h2>Thank you so much babyyy! I've missed you! Now we need to talk, DM or call? ❤️</h2>
     <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute gif">
   </div>
 
-  <!-- Video Response Section (if she says No on the final question) -->
   <div id="video-container" class="container">
     <video controls autoplay>
       <source src="https://drive.google.com/uc?export=download&id=114p_FYiedXmuPpx6lyF0x8gEHyaw4mMJ" type="video/mp4">
@@ -135,63 +130,56 @@
     let currentQuestionIndex = 0;
     const questionContainers = document.querySelectorAll('.question-container');
 
-    // Show the apology letter after 5 seconds
     window.onload = function() {
       setTimeout(() => {
         document.getElementById('content').style.display = 'block';
       }, 5000);
     };
 
-    // Start the interactive questions
     function startQuestions() {
       document.getElementById('content').style.display = 'none';
       document.getElementById('questions').style.display = 'block';
       showQuestion(currentQuestionIndex);
     }
 
-    // Display the question corresponding to the current index
     function showQuestion(index) {
       questionContainers.forEach((container, i) => {
         container.style.display = (i === index) ? 'block' : 'none';
       });
     }
 
-    // nextQuestion: answeredYes is boolean, btn is the button clicked
     function nextQuestion(answeredYes, btn) {
-      // If she clicks "No", adjust the sizes:
       if (!answeredYes) {
         const container = btn.parentElement;
         const yesBtn = container.querySelector('.yes');
         const noBtn = container.querySelector('.no');
-        // Get current font sizes (in pixels)
+
         let yesSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
         let noSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
-        // Increase Yes button's size and decrease No button's size, within limits.
-        yesSize = Math.min(yesSize + 4, 36); // cap yes at 36px
-        noSize = Math.max(noSize - 2, 10);    // no won't go below 10px
+
+        yesSize = Math.min(yesSize + 5, 40); // Increase Yes button size (max 40px)
+        noSize = Math.max(noSize - 3, 8);    // Decrease No button size (min 8px)
+
         yesBtn.style.fontSize = yesSize + "px";
         noBtn.style.fontSize = noSize + "px";
-        // Also apply a scale effect:
+
         yesBtn.style.transform = "scale(1.3)";
         noBtn.style.transform = "scale(0.7)";
       }
-      // Move to the next question
+
       currentQuestionIndex++;
       if (currentQuestionIndex < questionContainers.length) {
         showQuestion(currentQuestionIndex);
       } else {
-        // End of questions: show video response if she hasn't chosen forgiveness
         showVideo();
       }
     }
 
-    // If she forgives, show the GIF response
     function forgiveMe() {
       document.getElementById('questions').style.display = 'none';
       document.getElementById('gif-container').style.display = 'block';
     }
 
-    // Show the video response (final surprise) if she rejects
     function showVideo() {
       document.getElementById('questions').style.display = 'none';
       document.getElementById('video-container').style.display = 'block';
