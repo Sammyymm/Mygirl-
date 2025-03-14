@@ -52,15 +52,17 @@
     /* Imposter Screen */
     #imposter-screen { display: none; }
     /* Welcome Screen */
-    #welcome { display: none; }
+    #welcome { display: none; opacity: 0; transition: opacity 1s ease-in; }
     /* Memory Loading Screen */
     #memory-loading { display: none; }
     /* Memory Session */
     #memory-session { display: none; }
     .memory-question { display: none; margin-bottom: 20px; }
-    /* Epistle Section (Apology Letter) */
-    #content { display: none; opacity: 0; transition: opacity 1s ease-in; }
-    /* Interactive Questions (Forgiveness) */
+    /* Epistle 1 */
+    #epistle1 { display: none; opacity: 0; transition: opacity 1s ease-in; }
+    /* Epistle 2 (Second Apology) */
+    #epistle2 { display: none; opacity: 0; transition: opacity 1s ease-in; }
+    /* Interactive Questions Section (Forgiveness) */
     #questions { display: none; }
     .question-container { display: none; }
     .btn {
@@ -199,14 +201,14 @@
   </div>
 </div>
 
-<!-- Epistle Section (Apology Letter) -->
-<div id="content" class="container">
+<!-- Epistle 1 (First Apology Letter) -->
+<div id="epistle1" class="container">
   <h2>My Love, I'm Sorry...</h2>
   <p>
-    I've simped for you, loved you, and let my guard down completely.  
-    If you ever leave me, I'd be devastated.  
-    I trust you with everything, and I just hope you never give me a reason to regret it.  
-    I love you more than words can say.
+    Moyin,<br>
+    At this point, if you ever leave me, I'd be in total devastation. I trust you with everything, and I just hope you never give me a reason to regret it. I love you more than words can say. I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.<br>
+    You mean the absolute world to me, and I don’t take you for granted. I love you more than words can express, and I just want to make things right between us. I’ve left my guard down completely for you, and if you ever left, I'd be devastated. You’re the one I trust with everything, and I never want to do anything to make you regret choosing me.<br>
+    Please forgive me, Moyin. You’re too special to me to let this come between us. 💙
   </p>
   <button onclick="startInteractiveQuestions()">Continue</button>
 </div>
@@ -261,6 +263,17 @@
     <button class="yes btn" onclick="finalInteractive(true)">Yes</button>
     <button class="no btn" onclick="finalInteractive(false)">No</button>
   </div>
+</div>
+
+<!-- Epistle 2 (Second Apology Letter) for Final Interactive 'No' -->
+<div id="epistle2" class="container">
+  <h2>My Girl...</h2>
+  <p>
+    My girl, I seriously want you to know no one can ever take your place. You're my first and only love. I have fallen so deeply in love with you that I can't even process it—you literally control my emotions, and when I realized it, I just thought, "Wow, I'm cooked." This is what falling in love feels like.<br>
+    Remember when I told you I wasn't going all out because I was still keeping my guard up? You convinced me to let it down, and I love you regardless. I could let my friendship with anyone go because of you; you're my number one person.<br>
+    I want you to know how special you are to me. I admit my mistakes—I didn't consider your feelings, and I know you wouldn't do the same to me. I'm truly sorry for what I did. I'm sorry for not telling you, not listening, and not considering you. Now please come back to me, baby, and release me from my punishment. 😔💔
+  </p>
+  <button onclick="showVideo()">Continue</button>
 </div>
 
 <!-- GIF Response Section -->
@@ -322,14 +335,14 @@
         secCurrent++;
         if (secCurrent > 3) {
           document.getElementById("security-check").style.display = "none";
-          // Show Welcome Screen with smooth fade-in
+          // Show Welcome Screen
           document.getElementById("welcome").style.display = "block";
           setTimeout(() => {
             document.getElementById("welcome").style.opacity = 1;
-            // Play background music
+            // Start background music
             let music = document.getElementById("background-music");
             music.play().catch(e => console.log(e));
-            // After 3 seconds, show Memory Loading Screen
+            // After 3 seconds, show Memory Loading Screen for 7 seconds
             setTimeout(() => {
               document.getElementById("welcome").style.display = "none";
               document.getElementById("memory-loading").style.display = "block";
@@ -338,9 +351,9 @@
                 document.getElementById("memory-session").style.display = "block";
                 currentMemory = 0;
                 showMemory(currentMemory);
-              }, 3000);
+              }, 7000); // Memory loading for 7 seconds
             }, 3000);
-          }, 100); // slight delay for fade-in effect (adjust as needed)
+          }, 100);
         } else {
           showSecurityQuestion(secCurrent);
         }
@@ -370,16 +383,17 @@
   
   function finishMemory() {
     document.getElementById("memory-session").style.display = "none";
-    // After 5 seconds, show Epistle with smooth fade-in
+    // After 5 seconds, show Epistle 1 (with smooth fade-in)
     setTimeout(() => {
-      document.getElementById("content").style.display = "block";
-      document.getElementById("content").style.opacity = 1;
+      let epistle = document.getElementById("epistle1");
+      epistle.style.display = "block";
+      epistle.style.opacity = 1;
     }, 5000);
   }
   
-  // Epistle -> Interactive Questions Transition
+  // Epistle 1 -> Interactive Questions Transition
   function startInteractiveQuestions() {
-    document.getElementById("content").style.display = "none";
+    document.getElementById("epistle1").style.display = "none";
     document.getElementById("questions").style.display = "block";
     currentQuestion = 0;
     showQuestion(currentQuestion);
@@ -423,7 +437,7 @@
     if (answeredYes) {
       forgiveMe();
     } else {
-      showVideo();
+      showEpistle2();
     }
   }
   
@@ -432,13 +446,19 @@
     document.getElementById("gif-container").style.display = "block";
   }
   
-  function showVideo() {
+  function showEpistle2() {
     document.getElementById("questions").style.display = "none";
+    document.getElementById("epistle2").style.display = "block";
+    document.getElementById("epistle2").style.opacity = 1;
+  }
+  
+  function showVideo() {
+    document.getElementById("epistle2").style.display = "none";
     document.getElementById("video-container").style.display = "block";
   }
 </script>
 
-<!-- Pre-Check HTML (repeated at end for proper load order) -->
+<!-- Pre-Check HTML (for proper load order) -->
 <div id="pre-check" class="container">
   <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL!</h2>
   <p>Are you her or are you NAY?</p>
@@ -466,23 +486,4 @@
     <button class="option-btn" onclick="checkSecAnswer(2, 'D')">
       D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love, the power to leave me speechless, the color of every beautiful thing. Your eyes have this way of catching the light differently everytime he looks at them even makes them more beautiful. No matter the shade, they always stand out.
     </button>
-    <div class="sec-indicator" id="indicator-2"></div>
-  </div>
-  <div class="security-question" id="sec-q3">
-    <h3>3. What is Sammy's babe's favorite drink?</h3>
-    <button class="option-btn" onclick="checkSecAnswer(3, 'A')">A. Fanta</button>
-    <button class="option-btn" onclick="checkSecAnswer(3, 'B')">B. Malt</button>
-    <button class="option-btn" onclick="checkSecAnswer(3, 'C')">C. Chapman</button>
-    <button class="option-btn" onclick="checkSecAnswer(3, 'D')">D. Orange Juice</button>
-    <div class="sec-indicator" id="indicator-3"></div>
-  </div>
-</div>
-
-<!-- Imposter Screen -->
-<div id="imposter-screen" class="container">
-  <h2>You're an imposter! 😡🤬</h2>
-  <img src="https://media.giphy.com/media/l2Sq6xVVfzuH3C4re/giphy.gif" alt="Angry GIF">
-</div>
-
-</body>
-</html>
+    <div class
