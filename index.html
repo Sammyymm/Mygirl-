@@ -8,17 +8,17 @@
     body {
       margin: 0;
       padding: 0;
+      background: url('https://files.catbox.moe/qzs95x.jpeg') no-repeat center center/cover;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      color: white;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background: url('https://files.catbox.moe/qzs95x.jpeg') no-repeat center center/cover;
       text-align: center;
-      font-family: Arial, sans-serif;
-      color: white;
-      transition: opacity 1s;
     }
-    /* Common container style for all sections */
+    /* Common container style */
     .container {
       width: 90%;
       max-width: 600px;
@@ -27,9 +27,13 @@
       border-radius: 10px;
       margin: 10px auto;
     }
-    /* Security Check styling */
+    /* Pre-Check Landing Page */
+    #pre-check { display: none; }
+    /* Denied Screen */
+    #denied { display: none; }
+    /* Security Check Section */
     #security-check { display: none; }
-    .security-question { display: none; }
+    .security-question { display: none; margin-bottom: 20px; }
     .sec-indicator { color: lightgreen; font-weight: bold; margin-top: 10px; }
     .option-btn {
       display: block;
@@ -38,16 +42,17 @@
       font-size: 18px;
       border: none;
       border-radius: 5px;
-      width: 80%;
+      width: 90%;
       cursor: pointer;
-      transition: background 0.3s ease;
+      white-space: normal;
     }
-    .option-btn:hover { background: rgba(255, 255, 255, 0.2); }
-    /* Imposter screen */
+    .option-btn.green { background: green; color: white; }
+    .option-btn.red { background: red; color: white; }
+    /* Imposter Screen */
     #imposter-screen { display: none; }
-    /* Epistle styling */
-    #content { display: none; }
-    /* Interactive Questions styling */
+    /* Epistle Section */
+    #content { display: none; opacity: 0; transition: opacity 1s ease-in; }
+    /* Interactive Questions */
     #questions { display: none; }
     .question-container { display: none; }
     .btn {
@@ -63,7 +68,7 @@
     }
     .yes { background: green; color: white; }
     .no { background: red; color: white; }
-    /* GIF & Video Response */
+    /* Response Screens */
     #gif-container, #video-container { display: none; }
     #gif-container img { width: 80%; }
     h2 { color: gold; }
@@ -72,7 +77,21 @@
 </head>
 <body onload="init()">
 
-<!-- Security Check Section (Password Questions) -->
+<!-- Pre-Check Landing Page -->
+<div id="pre-check" class="container">
+  <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL!</h2>
+  <p>Are you her or are you NAY?</p>
+  <button class="option-btn green" onclick="choosePreCheck('HER')">HER</button>
+  <button class="option-btn red" onclick="choosePreCheck('NAY')">NAY</button>
+</div>
+
+<!-- Denied Screen (if she picks NAY) -->
+<div id="denied" class="container">
+  <h2>Access Denied!</h2>
+  <p>Sorry, you are not authorized to access this site.</p>
+</div>
+
+<!-- Security Check Section -->
 <div id="security-check" class="container">
   <h2>Before you proceed...</h2>
   <p>We need to know if you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
@@ -93,7 +112,9 @@
     <button class="option-btn" onclick="checkSecAnswer(2, 'A')">A. Green</button>
     <button class="option-btn" onclick="checkSecAnswer(2, 'B')">B. Yellow</button>
     <button class="option-btn" onclick="checkSecAnswer(2, 'C')">C. Black</button>
-    <button class="option-btn" onclick="checkSecAnswer(2, 'D')">D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love...</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'D')">
+      D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love, the power to leave me speechless, the color of every beautiful thing. Your eyes have this way of catching the light differently everytime he looks at them even makes them more beautiful. No matter the shade, they always stand out.
+    </button>
     <div class="sec-indicator" id="indicator-2"></div>
   </div>
   
@@ -128,53 +149,54 @@
 
 <!-- Interactive Questions Section -->
 <div id="questions" class="container">
+  <!-- Eight interactive questions appear one at a time -->
   <!-- Question 1 -->
   <div class="question-container">
     <h3>Hey baby, I miss you, do you care to check up on me? 😔</h3>
-    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
+    <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
   <!-- Question 2 -->
   <div class="question-container">
     <h3>Wow, uhm, are you still mad at me?</h3>
-    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
+    <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
   <!-- Question 3 -->
   <div class="question-container">
     <h3>Do you want to talk with me?</h3>
-    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
+    <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
   <!-- Question 4 -->
   <div class="question-container">
     <h3>For reals?</h3>
-    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
+    <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
   <!-- Question 5 -->
   <div class="question-container">
     <h3>If I asked for a hug now, would you give me?</h3>
-    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
+    <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
   <!-- Question 6 -->
   <div class="question-container">
     <h3>Do you even miss me?</h3>
-    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
+    <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
   <!-- Question 7 -->
   <div class="question-container">
     <h3>Breaking down, while coding this... Uhm, can I call you?</h3>
-    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
+    <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
   <!-- Question 8 -->
   <div class="question-container">
     <h3>I miss you so much, do you wanna speak with me?</h3>
-    <button class="yes btn" onclick="finalAnswer(true)">Yes</button>
-    <button class="no btn" onclick="finalAnswer(false)">No</button>
+    <button class="yes btn" onclick="finalInteractive(true)">Yes</button>
+    <button class="no btn" onclick="finalInteractive(false)">No</button>
   </div>
 </div>
 
@@ -199,21 +221,30 @@
 </audio>
 
 <script>
-  // Security Check Logic
-  let correctSecAnswers = { 1: 'A', 2: 'D', 3: 'C' };
-  let secCurrent = 1; // Using 1-based indexing for security questions
-
+  // Pre-Check Logic
   function init() {
-    // When page loads, show the first security question.
-    document.getElementById("security-check").style.display = "block";
-    showSecurityQuestion(secCurrent);
+    document.getElementById("pre-check").style.display = "block";
   }
 
+  function choosePreCheck(option) {
+    if (option === 'HER') {
+      document.getElementById("pre-check").style.display = "none";
+      document.getElementById("security-check").style.display = "block";
+      showSecurityQuestion(1);
+    } else {
+      // For NAY, show a simple access denied message.
+      document.getElementById("pre-check").style.display = "none";
+      document.getElementById("denied").style.display = "block";
+    }
+  }
+
+  // Security Check Logic
+  let correctSecAnswers = { 1: 'A', 2: 'D', 3: 'C' };
+  let secCurrent = 1; // 1-based indexing
+
   function showSecurityQuestion(num) {
-    // Hide all security questions first
     let secs = document.querySelectorAll(".security-question");
     secs.forEach(sec => sec.style.display = "none");
-    // Show the security question with id "sec-q{num}"
     let currentSec = document.getElementById("sec-q" + num);
     if (currentSec) {
       currentSec.style.display = "block";
@@ -222,32 +253,34 @@
 
   function checkSecAnswer(question, choice) {
     if (correctSecAnswers[question] === choice) {
-      // Show "Correct!" indicator for this question.
       let indicator = document.getElementById("indicator-" + question);
       indicator.textContent = "Correct!";
-      // After a short delay, move to the next question.
       setTimeout(() => {
         indicator.textContent = "";
         secCurrent++;
         if (secCurrent > 3) {
-          // All security questions answered correctly; hide security-check and show epistle.
           document.getElementById("security-check").style.display = "none";
-          document.getElementById("content").style.display = "block";
-          document.getElementById("background-music").play().catch(e => console.log(e));
+          // Start background music and then fade in epistle after 5 sec.
+          let music = document.getElementById("background-music");
+          music.play().catch(e => console.log(e));
+          setTimeout(() => {
+            let epistle = document.getElementById("content");
+            epistle.style.display = "block";
+            epistle.style.opacity = 1;
+          }, 5000);
         } else {
           showSecurityQuestion(secCurrent);
         }
       }, 1000);
     } else {
-      // Incorrect answer: show imposter screen immediately.
       document.getElementById("security-check").style.display = "none";
       document.getElementById("imposter-screen").style.display = "block";
     }
   }
 
-  // Interactive Questions (after epistle)
+  // Interactive Questions Logic (after epistle)
   let currentQuestion = 0;
-  let yesSize = 120, noSize = 120; // Initial sizes in pixels
+  let yesSize = 120, noSize = 120; // in pixels
   const questionContainers = document.querySelectorAll(".question-container");
 
   function startQuestions() {
@@ -262,8 +295,7 @@
     });
   }
 
-  function nextQuestion(answeredYes, btn) {
-    // For questions 1-7:
+  function nextInteractive(answeredYes, btn) {
     if (currentQuestion < questionContainers.length - 1) {
       if (!answeredYes) {
         yesSize += 20;  
@@ -275,7 +307,7 @@
         yesBtn.style.height = (yesSize * 0.5) + "px";
         noBtn.style.width = noSize + "px";
         noBtn.style.height = (noSize * 0.5) + "px";
-        // Swap buttons randomly:
+        // Swap positions randomly:
         if (Math.random() < 0.5) {
           let parent = container;
           parent.insertBefore(noBtn, yesBtn);
@@ -287,12 +319,15 @@
   }
 
   function finalAnswer(answeredYes) {
-    // For the 8th question:
     if (answeredYes) {
       forgiveMe();
     } else {
       showVideo();
     }
+  }
+
+  function finalInteractive(answeredYes) {
+    finalAnswer(answeredYes);
   }
 
   function forgiveMe() {
@@ -306,8 +341,19 @@
   }
 </script>
 
-<!-- Security Questions HTML (placed after body start) -->
+<!-- Pre-Check HTML (placed here at the end so it loads first) -->
+<div id="pre-check" class="container">
+  <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL!</h2>
+  <p>Are you her or are you NAY?</p>
+  <button class="option-btn green" onclick="choosePreCheck('HER')">HER</button>
+  <button class="option-btn red" onclick="choosePreCheck('NAY')">NAY</button>
+</div>
+
+<!-- Security Check HTML (placed here so it's loaded) -->
 <div id="security-check" class="container">
+  <h2>Before you proceed...</h2>
+  <p>We need to know if you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
+  
   <div class="security-question" id="sec-q1">
     <h3>1. What's Taylor Swift's lucky number?</h3>
     <button class="option-btn" onclick="checkSecAnswer(1, 'A')">A. 13</button>
@@ -316,14 +362,18 @@
     <button class="option-btn" onclick="checkSecAnswer(1, 'D')">D. 15</button>
     <div class="sec-indicator" id="indicator-1"></div>
   </div>
+  
   <div class="security-question" id="sec-q2">
     <h3>2. What color are Sammy's crush's eyes?</h3>
     <button class="option-btn" onclick="checkSecAnswer(2, 'A')">A. Green</button>
     <button class="option-btn" onclick="checkSecAnswer(2, 'B')">B. Yellow</button>
     <button class="option-btn" onclick="checkSecAnswer(2, 'C')">C. Black</button>
-    <button class="option-btn" onclick="checkSecAnswer(2, 'D')">D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love...</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'D')">
+      D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love, the power to leave me speechless, the color of every beautiful thing. Your eyes have this way of catching the light differently everytime he looks at them even makes them more beautiful. No matter the shade, they always stand out.
+    </button>
     <div class="sec-indicator" id="indicator-2"></div>
   </div>
+  
   <div class="security-question" id="sec-q3">
     <h3>3. What is Sammy's babe's favorite drink?</h3>
     <button class="option-btn" onclick="checkSecAnswer(3, 'A')">A. Fanta</button>
@@ -332,6 +382,12 @@
     <button class="option-btn" onclick="checkSecAnswer(3, 'D')">D. Orange Juice</button>
     <div class="sec-indicator" id="indicator-3"></div>
   </div>
+</div>
+
+<!-- Imposter Screen -->
+<div id="imposter-screen" class="container">
+  <h2>You're an imposter! 😡🤬</h2>
+  <img src="https://media.giphy.com/media/l2Sq6xVVfzuH3C4re/giphy.gif" alt="Angry GIF">
 </div>
 
 </body>
