@@ -23,12 +23,12 @@
     .container {
       width: 90%;
       max-width: 600px;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0,0,0,0.85);
       padding: 20px;
       border-radius: 10px;
       margin: 10px auto;
     }
-    /* Pre-Check Landing Page */
+    /* Pre-Check Landing */
     #pre-check { display: none; }
     /* Denied Screen */
     #denied { display: none; }
@@ -51,12 +51,16 @@
     .option-btn.red { background: red; color: white; }
     /* Imposter Screen */
     #imposter-screen { display: none; }
-    /* Epistle (Apology Letter) */
-    #content { display: none; opacity: 0; transition: opacity 1s ease-in; }
+    /* Welcome Screen */
+    #welcome { display: none; }
+    /* Memory Loading Screen */
+    #memory-loading { display: none; }
     /* Memory Session */
     #memory-session { display: none; }
     .memory-question { display: none; margin-bottom: 20px; }
-    /* Interactive Questions Section */
+    /* Epistle Section (Apology Letter) */
+    #content { display: none; opacity: 0; transition: opacity 1s ease-in; }
+    /* Interactive Questions (Forgiveness) */
     #questions { display: none; }
     .question-container { display: none; }
     .btn {
@@ -139,19 +143,18 @@
   <img src="https://media.giphy.com/media/l2Sq6xVVfzuH3C4re/giphy.gif" alt="Angry GIF">
 </div>
 
-<!-- Epistle Section (Apology Letter) -->
-<div id="content" class="container">
-  <h2>My Love, I'm Sorry...</h2>
-  <p>
-    I've simped for you, loved you, and let my guard down completely.  
-    At this point, if you ever leave me, I'd be in total devastation.  
-    I trust you with everything, and I just hope you never give me a reason to regret it.  
-    I love you more than words can say.
-  </p>
-  <button onclick="startMemorySession()">Continue</button>
+<!-- Welcome Screen -->
+<div id="welcome" class="container">
+  <h2>Security check passed! Welcome baby.</h2>
 </div>
 
-<!-- Interactive Memory Session -->
+<!-- Memory Loading Screen -->
+<div id="memory-loading" class="container">
+  <h2>Memory lane loading...</h2>
+  <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="Loading GIF">
+</div>
+
+<!-- Memory Session -->
 <div id="memory-session" class="container">
   <h2>Memory Lane</h2>
   <!-- Memory Question 1 -->
@@ -196,7 +199,19 @@
   </div>
 </div>
 
-<!-- Interactive Questions Section (Forgiveness Questions) -->
+<!-- Epistle Section (Apology Letter) -->
+<div id="content" class="container">
+  <h2>My Love, I'm Sorry...</h2>
+  <p>
+    I've simped for you, loved you, and let my guard down completely.  
+    If you ever leave me, I'd be devastated.  
+    I trust you with everything, and I just hope you never give me a reason to regret it.  
+    I love you more than words can say.
+  </p>
+  <button onclick="startInteractiveQuestions()">Continue</button>
+</div>
+
+<!-- Interactive Questions Section (Forgiveness) -->
 <div id="questions" class="container">
   <!-- Question 1 -->
   <div class="question-container">
@@ -307,13 +322,25 @@
         secCurrent++;
         if (secCurrent > 3) {
           document.getElementById("security-check").style.display = "none";
-          // Start background music and then fade in epistle after 5 seconds.
-          let music = document.getElementById("background-music");
-          music.play().catch(e => console.log(e));
+          // Show Welcome Screen with smooth fade-in
+          document.getElementById("welcome").style.display = "block";
           setTimeout(() => {
-            document.getElementById("content").style.display = "block";
-            document.getElementById("content").style.opacity = 1;
-          }, 5000);
+            document.getElementById("welcome").style.opacity = 1;
+            // Play background music
+            let music = document.getElementById("background-music");
+            music.play().catch(e => console.log(e));
+            // After 3 seconds, show Memory Loading Screen
+            setTimeout(() => {
+              document.getElementById("welcome").style.display = "none";
+              document.getElementById("memory-loading").style.display = "block";
+              setTimeout(() => {
+                document.getElementById("memory-loading").style.display = "none";
+                document.getElementById("memory-session").style.display = "block";
+                currentMemory = 0;
+                showMemory(currentMemory);
+              }, 3000);
+            }, 3000);
+          }, 100); // slight delay for fade-in effect (adjust as needed)
         } else {
           showSecurityQuestion(secCurrent);
         }
@@ -324,14 +351,7 @@
     }
   }
   
-  // Epistle -> Memory Session Transition
-  function startMemorySession() {
-    document.getElementById("content").style.display = "none";
-    document.getElementById("memory-session").style.display = "block";
-    currentMemory = 0;
-    showMemory(currentMemory);
-  }
-  
+  // Memory Session Logic
   let currentMemory = 0;
   const memoryQuestions = document.querySelectorAll(".memory-question");
   
@@ -350,18 +370,25 @@
   
   function finishMemory() {
     document.getElementById("memory-session").style.display = "none";
-    startInteractiveQuestions();
+    // After 5 seconds, show Epistle with smooth fade-in
+    setTimeout(() => {
+      document.getElementById("content").style.display = "block";
+      document.getElementById("content").style.opacity = 1;
+    }, 5000);
   }
   
-  // Interactive Questions (Forgiveness Session) Logic
+  // Epistle -> Interactive Questions Transition
+  function startInteractiveQuestions() {
+    document.getElementById("content").style.display = "none";
+    document.getElementById("questions").style.display = "block";
+    currentQuestion = 0;
+    showQuestion(currentQuestion);
+  }
+  
+  // Interactive Questions (Forgiveness) Logic
   let currentQuestion = 0;
   let yesSize = 120, noSize = 120; // in pixels
   const questionContainers = document.querySelectorAll(".question-container");
-  
-  function startInteractiveQuestions() {
-    document.getElementById("questions").style.display = "block";
-    showQuestion(currentQuestion);
-  }
   
   function showQuestion(index) {
     questionContainers.forEach((container, i) => {
@@ -411,7 +438,7 @@
   }
 </script>
 
-<!-- Pre-Check HTML (placed at the end for proper load order) -->
+<!-- Pre-Check HTML (repeated at end for proper load order) -->
 <div id="pre-check" class="container">
   <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL!</h2>
   <p>Are you her or are you NAY?</p>
