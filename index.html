@@ -17,6 +17,7 @@
       align-items: center;
       height: 100vh;
       text-align: center;
+      transition: opacity 1s;
     }
     /* Common container style */
     .container {
@@ -50,9 +51,12 @@
     .option-btn.red { background: red; color: white; }
     /* Imposter Screen */
     #imposter-screen { display: none; }
-    /* Epistle Section */
+    /* Epistle (Apology Letter) */
     #content { display: none; opacity: 0; transition: opacity 1s ease-in; }
-    /* Interactive Questions */
+    /* Memory Session */
+    #memory-session { display: none; }
+    .memory-question { display: none; margin-bottom: 20px; }
+    /* Interactive Questions Section */
     #questions { display: none; }
     .question-container { display: none; }
     .btn {
@@ -85,7 +89,7 @@
   <button class="option-btn red" onclick="choosePreCheck('NAY')">NAY</button>
 </div>
 
-<!-- Denied Screen (if she picks NAY) -->
+<!-- Denied Screen -->
 <div id="denied" class="container">
   <h2>Access Denied!</h2>
   <p>Sorry, you are not authorized to access this site.</p>
@@ -144,12 +148,56 @@
     I trust you with everything, and I just hope you never give me a reason to regret it.  
     I love you more than words can say.
   </p>
-  <button onclick="startQuestions()">Continue</button>
+  <button onclick="startMemorySession()">Continue</button>
 </div>
 
-<!-- Interactive Questions Section -->
+<!-- Interactive Memory Session -->
+<div id="memory-session" class="container">
+  <h2>Memory Lane</h2>
+  <!-- Memory Question 1 -->
+  <div class="memory-question" id="mem-q1">
+    <h3>Do you remember the first time we met when you were still wearing a straight skirt? 🥹</h3>
+    <button class="btn btn-green" onclick="nextMemory()">Next</button>
+  </div>
+  <!-- Memory Question 2 -->
+  <div class="memory-question" id="mem-q2">
+    <h3>Remember when I messed up our first kiss? 🤦🏾</h3>
+    <button class="btn btn-green" onclick="nextMemory()">Next</button>
+  </div>
+  <!-- Memory Question 3 -->
+  <div class="memory-question" id="mem-q3">
+    <h3>Remember when we usually sat together and held hands in class?</h3>
+    <button class="btn btn-green" onclick="nextMemory()">Next</button>
+  </div>
+  <!-- Memory Question 4 -->
+  <div class="memory-question" id="mem-q4">
+    <h3>Remember when you were afraid of moths and you hid under the table?</h3>
+    <button class="btn btn-green" onclick="nextMemory()">Next</button>
+  </div>
+  <!-- Memory Question 5 -->
+  <div class="memory-question" id="mem-q5">
+    <h3>Remember when I used to brush your hair?</h3>
+    <button class="btn btn-green" onclick="nextMemory()">Next</button>
+  </div>
+  <!-- Memory Question 6 -->
+  <div class="memory-question" id="mem-q6">
+    <h3>Remember when we first wore matching hoodies and everyone was staring at us?</h3>
+    <button class="btn btn-green" onclick="nextMemory()">Next</button>
+  </div>
+  <!-- Memory Question 7 -->
+  <div class="memory-question" id="mem-q7">
+    <h3>Remember when I was jealous of you & Paul & Quam?</h3>
+    <button class="btn btn-green" onclick="nextMemory()">Next</button>
+  </div>
+  <!-- Memory Question 8 -->
+  <div class="memory-question" id="mem-q8">
+    <h3>Remember when your mom first impression on me? 😭</h3>
+    <button class="btn btn-green" onclick="finishMemory()">Continue</button>
+  </div>
+</div>
+
+<!-- Interactive Questions Section (Forgiveness Questions) -->
 <div id="questions" class="container">
-  <!-- Eight interactive questions appear one at a time -->
   <!-- Question 1 -->
   <div class="question-container">
     <h3>Hey baby, I miss you, do you care to check up on me? 😔</h3>
@@ -225,23 +273,22 @@
   function init() {
     document.getElementById("pre-check").style.display = "block";
   }
-
+  
   function choosePreCheck(option) {
     if (option === 'HER') {
       document.getElementById("pre-check").style.display = "none";
       document.getElementById("security-check").style.display = "block";
       showSecurityQuestion(1);
     } else {
-      // For NAY, show a simple access denied message.
       document.getElementById("pre-check").style.display = "none";
       document.getElementById("denied").style.display = "block";
     }
   }
-
+  
   // Security Check Logic
   let correctSecAnswers = { 1: 'A', 2: 'D', 3: 'C' };
-  let secCurrent = 1; // 1-based indexing
-
+  let secCurrent = 1;
+  
   function showSecurityQuestion(num) {
     let secs = document.querySelectorAll(".security-question");
     secs.forEach(sec => sec.style.display = "none");
@@ -250,7 +297,7 @@
       currentSec.style.display = "block";
     }
   }
-
+  
   function checkSecAnswer(question, choice) {
     if (correctSecAnswers[question] === choice) {
       let indicator = document.getElementById("indicator-" + question);
@@ -260,13 +307,12 @@
         secCurrent++;
         if (secCurrent > 3) {
           document.getElementById("security-check").style.display = "none";
-          // Start background music and then fade in epistle after 5 sec.
+          // Start background music and then fade in epistle after 5 seconds.
           let music = document.getElementById("background-music");
           music.play().catch(e => console.log(e));
           setTimeout(() => {
-            let epistle = document.getElementById("content");
-            epistle.style.display = "block";
-            epistle.style.opacity = 1;
+            document.getElementById("content").style.display = "block";
+            document.getElementById("content").style.opacity = 1;
           }, 5000);
         } else {
           showSecurityQuestion(secCurrent);
@@ -277,29 +323,57 @@
       document.getElementById("imposter-screen").style.display = "block";
     }
   }
-
-  // Interactive Questions Logic (after epistle)
+  
+  // Epistle -> Memory Session Transition
+  function startMemorySession() {
+    document.getElementById("content").style.display = "none";
+    document.getElementById("memory-session").style.display = "block";
+    currentMemory = 0;
+    showMemory(currentMemory);
+  }
+  
+  let currentMemory = 0;
+  const memoryQuestions = document.querySelectorAll(".memory-question");
+  
+  function showMemory(index) {
+    memoryQuestions.forEach((mq, i) => {
+      mq.style.display = (i === index) ? "block" : "none";
+    });
+  }
+  
+  function nextMemory() {
+    currentMemory++;
+    if (currentMemory < memoryQuestions.length) {
+      showMemory(currentMemory);
+    }
+  }
+  
+  function finishMemory() {
+    document.getElementById("memory-session").style.display = "none";
+    startInteractiveQuestions();
+  }
+  
+  // Interactive Questions (Forgiveness Session) Logic
   let currentQuestion = 0;
   let yesSize = 120, noSize = 120; // in pixels
   const questionContainers = document.querySelectorAll(".question-container");
-
-  function startQuestions() {
-    document.getElementById("content").style.display = "none";
+  
+  function startInteractiveQuestions() {
     document.getElementById("questions").style.display = "block";
     showQuestion(currentQuestion);
   }
-
+  
   function showQuestion(index) {
     questionContainers.forEach((container, i) => {
       container.style.display = (i === index) ? "block" : "none";
     });
   }
-
+  
   function nextInteractive(answeredYes, btn) {
     if (currentQuestion < questionContainers.length - 1) {
       if (!answeredYes) {
         yesSize += 20;  
-        noSize = Math.max(noSize - 10, 40);  
+        noSize = Math.max(noSize - 10, 40);
         let container = questionContainers[currentQuestion];
         let yesBtn = container.querySelector(".yes");
         let noBtn = container.querySelector(".no");
@@ -307,7 +381,7 @@
         yesBtn.style.height = (yesSize * 0.5) + "px";
         noBtn.style.width = noSize + "px";
         noBtn.style.height = (noSize * 0.5) + "px";
-        // Swap positions randomly:
+        // Randomly swap positions:
         if (Math.random() < 0.5) {
           let parent = container;
           parent.insertBefore(noBtn, yesBtn);
@@ -317,31 +391,27 @@
       showQuestion(currentQuestion);
     }
   }
-
-  function finalAnswer(answeredYes) {
+  
+  function finalInteractive(answeredYes) {
     if (answeredYes) {
       forgiveMe();
     } else {
       showVideo();
     }
   }
-
-  function finalInteractive(answeredYes) {
-    finalAnswer(answeredYes);
-  }
-
+  
   function forgiveMe() {
     document.getElementById("questions").style.display = "none";
     document.getElementById("gif-container").style.display = "block";
   }
-
+  
   function showVideo() {
     document.getElementById("questions").style.display = "none";
     document.getElementById("video-container").style.display = "block";
   }
 </script>
 
-<!-- Pre-Check HTML (placed here at the end so it loads first) -->
+<!-- Pre-Check HTML (placed at the end for proper load order) -->
 <div id="pre-check" class="container">
   <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL!</h2>
   <p>Are you her or are you NAY?</p>
@@ -349,11 +419,10 @@
   <button class="option-btn red" onclick="choosePreCheck('NAY')">NAY</button>
 </div>
 
-<!-- Security Check HTML (placed here so it's loaded) -->
+<!-- Security Check HTML -->
 <div id="security-check" class="container">
   <h2>Before you proceed...</h2>
   <p>We need to know if you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
-  
   <div class="security-question" id="sec-q1">
     <h3>1. What's Taylor Swift's lucky number?</h3>
     <button class="option-btn" onclick="checkSecAnswer(1, 'A')">A. 13</button>
@@ -362,7 +431,6 @@
     <button class="option-btn" onclick="checkSecAnswer(1, 'D')">D. 15</button>
     <div class="sec-indicator" id="indicator-1"></div>
   </div>
-  
   <div class="security-question" id="sec-q2">
     <h3>2. What color are Sammy's crush's eyes?</h3>
     <button class="option-btn" onclick="checkSecAnswer(2, 'A')">A. Green</button>
@@ -373,7 +441,6 @@
     </button>
     <div class="sec-indicator" id="indicator-2"></div>
   </div>
-  
   <div class="security-question" id="sec-q3">
     <h3>3. What is Sammy's babe's favorite drink?</h3>
     <button class="option-btn" onclick="checkSecAnswer(3, 'A')">A. Fanta</button>
