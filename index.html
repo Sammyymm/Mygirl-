@@ -16,9 +16,8 @@
             text-align: center;
             font-family: Arial, sans-serif;
             color: white;
-            transition: opacity 1s;
         }
-        #content, #password-check, #questions, #gif-container, #video-container {
+        #password-check, #content, #questions, #gif-container, #video-container {
             display: none;
             width: 90%;
             max-width: 600px;
@@ -31,11 +30,10 @@
         .btn-green { background: green; color: white; }
         .btn-red { background: red; color: white; }
         .option-btn { display: block; margin: 5px auto; width: 80%; }
-        .wrong-screen { display: none; }
         #gif-container img { width: 80%; }
     </style>
 </head>
-<body>
+<body onload="showPasswordCheck()">
 
 <!-- Security Check -->
 <div id="password-check">
@@ -52,7 +50,7 @@
     <button class="option-btn btn" onclick="checkAnswer(2, 'A')">A. Green</button>
     <button class="option-btn btn" onclick="checkAnswer(2, 'B')">B. Yellow</button>
     <button class="option-btn btn" onclick="checkAnswer(2, 'C')">C. Black</button>
-    <button class="option-btn btn" onclick="checkAnswer(2, 'D')">D. Mesmerizing, breathtaking, definition of sunrise...</button>
+    <button class="option-btn btn" onclick="checkAnswer(2, 'D')">D. Mesmerizing, breathtaking, warm and full of love...</button>
 
     <h3>3. What is Sammy's babe's favorite drink?</h3>
     <button class="option-btn btn" onclick="checkAnswer(3, 'A')">A. Fanta</button>
@@ -61,8 +59,8 @@
     <button class="option-btn btn" onclick="checkAnswer(3, 'D')">D. Orange Juice</button>
 </div>
 
-<!-- IMPOSSIBLE SCREEN -->
-<div id="imposter-screen" class="wrong-screen">
+<!-- IMPOSSER SCREEN -->
+<div id="imposter-screen" style="display: none;">
     <h2>You're an imposter! 😡🤬</h2>
     <img src="https://media.giphy.com/media/l2Sq6xVVfzuH3C4re/giphy.gif" alt="Angry GIF">
 </div>
@@ -109,6 +107,10 @@
 <script>
     let correctAnswers = { 1: 'A', 2: 'D', 3: 'C' };
     let answered = { 1: false, 2: false, 3: false };
+
+    function showPasswordCheck() {
+        document.getElementById('password-check').style.display = 'block';
+    }
 
     function checkAnswer(question, choice) {
         if (correctAnswers[question] === choice) {
