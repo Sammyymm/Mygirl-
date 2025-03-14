@@ -18,29 +18,19 @@
       color: white;
       transition: opacity 1s;
     }
-    /* Security Check Section */
-    #password-check, 
-    /* Epistle Section */
-    #content, 
-    /* Interactive Questions */
-    #questions, 
-    /* GIF Response */
-    #gif-container, 
-    /* Surprise Video */
-    #video-container, 
-    /* Imposter Screen */
-    #imposter-screen {
-      display: none;
+    /* Common container style for all sections */
+    .container {
       width: 90%;
       max-width: 600px;
       background: rgba(0, 0, 0, 0.85);
       padding: 20px;
       border-radius: 10px;
-      margin: 10px;
+      margin: 10px auto;
     }
-    h2 { color: gold; }
-    h3 { color: cyan; }
-    /* Option Buttons for Security Check */
+    /* Security Check styling */
+    #security-check { display: none; }
+    .security-question { display: none; }
+    .sec-indicator { color: lightgreen; font-weight: bold; margin-top: 10px; }
     .option-btn {
       display: block;
       margin: 8px auto;
@@ -53,8 +43,14 @@
       transition: background 0.3s ease;
     }
     .option-btn:hover { background: rgba(255, 255, 255, 0.2); }
-    /* Interactive Questions Buttons */
-    .yes, .no {
+    /* Imposter screen */
+    #imposter-screen { display: none; }
+    /* Epistle styling */
+    #content { display: none; }
+    /* Interactive Questions styling */
+    #questions { display: none; }
+    .question-container { display: none; }
+    .btn {
       border: none;
       padding: 10px;
       margin: 10px;
@@ -67,44 +63,59 @@
     }
     .yes { background: green; color: white; }
     .no { background: red; color: white; }
-    /* GIF styling */
+    /* GIF & Video Response */
+    #gif-container, #video-container { display: none; }
     #gif-container img { width: 80%; }
+    h2 { color: gold; }
+    h3 { color: cyan; }
   </style>
 </head>
 <body onload="init()">
 
-<!-- Security Check Section -->
-<div id="password-check">
+<!-- Security Check Section (Password Questions) -->
+<div id="security-check" class="container">
   <h2>Before you proceed...</h2>
   <p>We need to know if you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
   
-  <h3>1. What's Taylor Swift's lucky number?</h3>
-  <button class="option-btn" onclick="checkAnswer(1, 'A')">A. 13</button>
-  <button class="option-btn" onclick="checkAnswer(1, 'B')">B. 27</button>
-  <button class="option-btn" onclick="checkAnswer(1, 'C')">C. 22</button>
-  <button class="option-btn" onclick="checkAnswer(1, 'D')">D. 15</button>
+  <!-- Security Question 1 -->
+  <div class="security-question" id="sec-q1">
+    <h3>1. What's Taylor Swift's lucky number?</h3>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'A')">A. 13</button>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'B')">B. 27</button>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'C')">C. 22</button>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'D')">D. 15</button>
+    <div class="sec-indicator" id="indicator-1"></div>
+  </div>
   
-  <h3>2. What color are Sammy's crush's eyes?</h3>
-  <button class="option-btn" onclick="checkAnswer(2, 'A')">A. Green</button>
-  <button class="option-btn" onclick="checkAnswer(2, 'B')">B. Yellow</button>
-  <button class="option-btn" onclick="checkAnswer(2, 'C')">C. Black</button>
-  <button class="option-btn" onclick="checkAnswer(2, 'D')">D. Mesmerizing, breathtaking, warm and full of love...</button>
+  <!-- Security Question 2 -->
+  <div class="security-question" id="sec-q2">
+    <h3>2. What color are Sammy's crush's eyes?</h3>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'A')">A. Green</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'B')">B. Yellow</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'C')">C. Black</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'D')">D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love...</button>
+    <div class="sec-indicator" id="indicator-2"></div>
+  </div>
   
-  <h3>3. What is Sammy's babe's favorite drink?</h3>
-  <button class="option-btn" onclick="checkAnswer(3, 'A')">A. Fanta</button>
-  <button class="option-btn" onclick="checkAnswer(3, 'B')">B. Malt</button>
-  <button class="option-btn" onclick="checkAnswer(3, 'C')">C. Chapman</button>
-  <button class="option-btn" onclick="checkAnswer(3, 'D')">D. Orange Juice</button>
+  <!-- Security Question 3 -->
+  <div class="security-question" id="sec-q3">
+    <h3>3. What is Sammy's babe's favorite drink?</h3>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'A')">A. Fanta</button>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'B')">B. Malt</button>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'C')">C. Chapman</button>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'D')">D. Orange Juice</button>
+    <div class="sec-indicator" id="indicator-3"></div>
+  </div>
 </div>
 
 <!-- Imposter Screen -->
-<div id="imposter-screen">
+<div id="imposter-screen" class="container">
   <h2>You're an imposter! 😡🤬</h2>
   <img src="https://media.giphy.com/media/l2Sq6xVVfzuH3C4re/giphy.gif" alt="Angry GIF">
 </div>
 
-<!-- Epistle Section -->
-<div id="content">
+<!-- Epistle Section (Apology Letter) -->
+<div id="content" class="container">
   <h2>My Love, I'm Sorry...</h2>
   <p>
     I've simped for you, loved you, and let my guard down completely.  
@@ -116,65 +127,65 @@
 </div>
 
 <!-- Interactive Questions Section -->
-<div id="questions">
+<div id="questions" class="container">
   <!-- Question 1 -->
   <div class="question-container">
     <h3>Hey baby, I miss you, do you care to check up on me? 😔</h3>
-    <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
+    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
   </div>
   <!-- Question 2 -->
   <div class="question-container">
     <h3>Wow, uhm, are you still mad at me?</h3>
-    <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
+    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
   </div>
   <!-- Question 3 -->
   <div class="question-container">
     <h3>Do you want to talk with me?</h3>
-    <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
+    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
   </div>
   <!-- Question 4 -->
   <div class="question-container">
     <h3>For reals?</h3>
-    <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
+    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
   </div>
   <!-- Question 5 -->
   <div class="question-container">
     <h3>If I asked for a hug now, would you give me?</h3>
-    <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
+    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
   </div>
   <!-- Question 6 -->
   <div class="question-container">
     <h3>Do you even miss me?</h3>
-    <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
+    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
   </div>
   <!-- Question 7 -->
   <div class="question-container">
     <h3>Breaking down, while coding this... Uhm, can I call you?</h3>
-    <button class="yes" onclick="nextQuestion(true, this)">Yes</button>
-    <button class="no" onclick="nextQuestion(false, this)">No</button>
+    <button class="yes btn" onclick="nextQuestion(true, this)">Yes</button>
+    <button class="no btn" onclick="nextQuestion(false, this)">No</button>
   </div>
   <!-- Question 8 -->
   <div class="question-container">
     <h3>I miss you so much, do you wanna speak with me?</h3>
-    <button class="yes" onclick="finalAnswer(true)">Yes</button>
-    <button class="no" onclick="finalAnswer(false)">No</button>
+    <button class="yes btn" onclick="finalAnswer(true)">Yes</button>
+    <button class="no btn" onclick="finalAnswer(false)">No</button>
   </div>
 </div>
 
 <!-- GIF Response Section -->
-<div id="gif-container">
+<div id="gif-container" class="container">
   <h2>Thank you so much babyyy! I've missed you! Now we need to talk, DM or call? ❤️</h2>
   <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute gif">
 </div>
 
 <!-- Surprise Video Section -->
-<div id="video-container">
+<div id="video-container" class="container">
   <video width="90%" controls autoplay>
     <source src="https://files.catbox.moe/t28ds3.mp4" type="video/mp4">
     Your browser does not support the video tag.
@@ -188,36 +199,55 @@
 </audio>
 
 <script>
-  function init() {
-    // Show the security check immediately on load.
-    document.getElementById("password-check").style.display = "block";
-  }
-  
   // Security Check Logic
-  let correctAnswers = { 1: 'A', 2: 'D', 3: 'C' };
-  let answered = { 1: false, 2: false, 3: false };
+  let correctSecAnswers = { 1: 'A', 2: 'D', 3: 'C' };
+  let secCurrent = 1; // Using 1-based indexing for security questions
 
-  function checkAnswer(question, choice) {
-    if (correctAnswers[question] === choice) {
-      answered[question] = true;
-    } else {
-      // If any answer is wrong, show imposter screen.
-      document.getElementById("password-check").style.display = "none";
-      document.getElementById("imposter-screen").style.display = "block";
-      return;
-    }
-    // If all three answers are correct, proceed to epistle.
-    if (answered[1] && answered[2] && answered[3]) {
-      document.getElementById("password-check").style.display = "none";
-      document.getElementById("content").style.display = "block";
-      // Play background music.
-      document.getElementById("background-music").play().catch(e => console.log(e));
+  function init() {
+    // When page loads, show the first security question.
+    document.getElementById("security-check").style.display = "block";
+    showSecurityQuestion(secCurrent);
+  }
+
+  function showSecurityQuestion(num) {
+    // Hide all security questions first
+    let secs = document.querySelectorAll(".security-question");
+    secs.forEach(sec => sec.style.display = "none");
+    // Show the security question with id "sec-q{num}"
+    let currentSec = document.getElementById("sec-q" + num);
+    if (currentSec) {
+      currentSec.style.display = "block";
     }
   }
 
-  // Interactive Questions Logic (after epistle)
+  function checkSecAnswer(question, choice) {
+    if (correctSecAnswers[question] === choice) {
+      // Show "Correct!" indicator for this question.
+      let indicator = document.getElementById("indicator-" + question);
+      indicator.textContent = "Correct!";
+      // After a short delay, move to the next question.
+      setTimeout(() => {
+        indicator.textContent = "";
+        secCurrent++;
+        if (secCurrent > 3) {
+          // All security questions answered correctly; hide security-check and show epistle.
+          document.getElementById("security-check").style.display = "none";
+          document.getElementById("content").style.display = "block";
+          document.getElementById("background-music").play().catch(e => console.log(e));
+        } else {
+          showSecurityQuestion(secCurrent);
+        }
+      }, 1000);
+    } else {
+      // Incorrect answer: show imposter screen immediately.
+      document.getElementById("security-check").style.display = "none";
+      document.getElementById("imposter-screen").style.display = "block";
+    }
+  }
+
+  // Interactive Questions (after epistle)
   let currentQuestion = 0;
-  let yesSize = 120, noSize = 120; // Initial sizes (in pixels)
+  let yesSize = 120, noSize = 120; // Initial sizes in pixels
   const questionContainers = document.querySelectorAll(".question-container");
 
   function startQuestions() {
@@ -235,10 +265,9 @@
   function nextQuestion(answeredYes, btn) {
     // For questions 1-7:
     if (currentQuestion < questionContainers.length - 1) {
-      // If she answered "No", adjust button sizes and swap their positions.
       if (!answeredYes) {
         yesSize += 20;  
-        noSize = Math.max(noSize - 10, 40);  // Minimum width is 40px
+        noSize = Math.max(noSize - 10, 40);  
         let container = questionContainers[currentQuestion];
         let yesBtn = container.querySelector(".yes");
         let noBtn = container.querySelector(".no");
@@ -246,7 +275,7 @@
         yesBtn.style.height = (yesSize * 0.5) + "px";
         noBtn.style.width = noSize + "px";
         noBtn.style.height = (noSize * 0.5) + "px";
-        // Swap positions randomly.
+        // Swap buttons randomly:
         if (Math.random() < 0.5) {
           let parent = container;
           parent.insertBefore(noBtn, yesBtn);
@@ -276,6 +305,34 @@
     document.getElementById("video-container").style.display = "block";
   }
 </script>
+
+<!-- Security Questions HTML (placed after body start) -->
+<div id="security-check" class="container">
+  <div class="security-question" id="sec-q1">
+    <h3>1. What's Taylor Swift's lucky number?</h3>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'A')">A. 13</button>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'B')">B. 27</button>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'C')">C. 22</button>
+    <button class="option-btn" onclick="checkSecAnswer(1, 'D')">D. 15</button>
+    <div class="sec-indicator" id="indicator-1"></div>
+  </div>
+  <div class="security-question" id="sec-q2">
+    <h3>2. What color are Sammy's crush's eyes?</h3>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'A')">A. Green</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'B')">B. Yellow</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'C')">C. Black</button>
+    <button class="option-btn" onclick="checkSecAnswer(2, 'D')">D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love...</button>
+    <div class="sec-indicator" id="indicator-2"></div>
+  </div>
+  <div class="security-question" id="sec-q3">
+    <h3>3. What is Sammy's babe's favorite drink?</h3>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'A')">A. Fanta</button>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'B')">B. Malt</button>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'C')">C. Chapman</button>
+    <button class="option-btn" onclick="checkSecAnswer(3, 'D')">D. Orange Juice</button>
+    <div class="sec-indicator" id="indicator-3"></div>
+  </div>
+</div>
 
 </body>
 </html>
