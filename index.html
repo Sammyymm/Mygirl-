@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>I'm Sorry, My Love</title>
-    
     <style>
       /* Basic Page Styling */
       body {
@@ -12,17 +11,18 @@
         padding: 0;
         background: url('https://files.catbox.moe/qzs95x.jpeg')
           no-repeat center center/cover;
+        background-size: cover;
         font-family: Arial, sans-serif;
         color: white;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
         height: 100vh;
         text-align: center;
         transition: opacity 1s;
       }
-      
+
       /* Container Style */
       .container {
         width: 90%;
@@ -32,12 +32,12 @@
         border-radius: 10px;
         margin: 20px auto;
       }
-      
-      /* Utility Class for Hidden Elements */
+
+      /* Utility Class to Hide Elements */
       .hidden {
         display: none;
       }
-      
+
       /* Button Styling */
       button {
         padding: 10px 20px;
@@ -50,61 +50,53 @@
         color: white;
         transition: all 0.3s ease;
       }
-      
       button:hover {
         background: linear-gradient(to right, #ff512f, #dd2476);
       }
-      
       .green {
         background: green;
         color: white;
       }
-      
       .red {
         background: red;
         color: white;
       }
-      
-      /* Typing Effect for Epistle */
+
+      /* Epistle Typing Effect */
       #epistle {
         white-space: pre-line;
         font-size: 16px;
         line-height: 1.5;
       }
-      
-      /* Additional Element Styling */
+
+      /* Additional Section Styling */
       .question-container {
         display: none;
       }
-      
       #gif-container,
       #video-container {
         display: none;
       }
-      
       h2 {
         color: gold;
       }
-      
       h3 {
         color: cyan;
       }
       
-      /* Extra spacing to preserve many lines */
+      /* Extra spacing (for high line count) */
       
       
       /* End of CSS */
     </style>
   </head>
-  
   <body onload="init()">
-    <!-- Pre-Check Landing Page -->
+    <!-- ======================================================== -->
+    <!-- 1. Pre-Check Landing Section -->
+    <!-- Purpose: Verify that the visitor is “Ebuka’s Girl” before proceeding -->
+    <!-- Display: "THIS SITE IS ONLY FOR SAMMY'S GIRL ARE YOU ..." with options HER (green) and NAY (red) -->
+    <!-- ======================================================== -->
     <div id="pre-check" class="container">
-      <!-- 
-        Pre-Security Check: 
-        Purpose: Verify that the visitor is “Ebuka’s Girl” before proceeding.
-        Display: THIS SITE IS ONLY FOR SAMMY'S GIRL ARE YOU ...
-      -->
       <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL ARE YOU ...</h2>
       <p>Are you her or are you NAY?</p>
       <button class="option-btn green" onclick="choosePreCheck('HER')">
@@ -114,21 +106,24 @@
         NAY
       </button>
     </div>
-    
-    <!-- Denied Screen -->
+
+    <!-- ======================================================== -->
+    <!-- 2. Denied Screen -->
+    <!-- ======================================================== -->
     <div id="denied" class="container hidden">
       <h2>Access Denied!</h2>
       <p>Sorry, you are not authorized to access this site.</p>
     </div>
-    
-    <!-- Security Check Section -->
+
+    <!-- ======================================================== -->
+    <!-- 3. Security Check Section -->
+    <!-- ======================================================== -->
     <div id="security-check" class="container hidden">
       <h2>Before you proceed...</h2>
       <p>
-        We need to know if you're Ebuka's girl – the one who controls his mood
-        &amp; emotions! 🥰
+        We need to know if you're Ebuka's girl – the one who controls his mood &
+        emotions! 🥰
       </p>
-      
       <!-- Security Question 1 -->
       <div class="security-question" id="sec-q1">
         <h3>1. What's Taylor Swift's lucky number?</h3>
@@ -146,7 +141,6 @@
         </button>
         <div class="sec-indicator" id="indicator-1"></div>
       </div>
-      
       <!-- Security Question 2 -->
       <div class="security-question" id="sec-q2">
         <h3>2. What color are Sammy's crush's eyes?</h3>
@@ -166,7 +160,6 @@
         </button>
         <div class="sec-indicator" id="indicator-2"></div>
       </div>
-      
       <!-- Security Question 3 -->
       <div class="security-question" id="sec-q3">
         <h3>3. What is Sammy's babe's favorite drink?</h3>
@@ -185,8 +178,10 @@
         <div class="sec-indicator" id="indicator-3"></div>
       </div>
     </div>
-    
-    <!-- Imposter Screen -->
+
+    <!-- ======================================================== -->
+    <!-- 4. Imposter Screen -->
+    <!-- ======================================================== -->
     <div id="imposter-screen" class="container hidden">
       <h2>You're an imposter! 😡🤬</h2>
       <img
@@ -194,13 +189,17 @@
         alt="Angry GIF"
       />
     </div>
-    
-    <!-- Welcome Screen -->
+
+    <!-- ======================================================== -->
+    <!-- 5. Welcome Screen -->
+    <!-- ======================================================== -->
     <div id="welcome" class="container hidden">
       <h2>Security check passed! Welcome baby.</h2>
     </div>
-    
-    <!-- Memory Loading Screen -->
+
+    <!-- ======================================================== -->
+    <!-- 6. Memory Loading Screen -->
+    <!-- ======================================================== -->
     <div id="memory-loading" class="container hidden">
       <h2>Memory lane loading...</h2>
       <img
@@ -208,11 +207,12 @@
         alt="Loading GIF"
       />
     </div>
-    
-    <!-- Memory Session -->
+
+    <!-- ======================================================== -->
+    <!-- 7. Memory Session -->
+    <!-- ======================================================== -->
     <div id="memory-session" class="container hidden">
       <h2>Memory Lane</h2>
-      
       <!-- Memory Question 1 -->
       <div class="memory-question" id="mem-q1">
         <h3>
@@ -221,31 +221,28 @@
         </h3>
         <button class="btn btn-green" onclick="nextMemory()">Next</button>
       </div>
-      
       <!-- Memory Question 2 -->
       <div class="memory-question" id="mem-q2">
         <h3>Remember when I messed up our first kiss? 🤦🏾</h3>
         <button class="btn btn-green" onclick="nextMemory()">Next</button>
       </div>
-      
       <!-- Memory Question 3 -->
       <div class="memory-question" id="mem-q3">
         <h3>Remember when we usually sat together and held hands in class?</h3>
         <button class="btn btn-green" onclick="nextMemory()">Next</button>
       </div>
-      
       <!-- Memory Question 4 -->
       <div class="memory-question" id="mem-q4">
-        <h3>Remember when you were afraid of moths and you hid under the table?</h3>
+        <h3>
+          Remember when you were afraid of moths and you hid under the table?
+        </h3>
         <button class="btn btn-green" onclick="nextMemory()">Next</button>
       </div>
-      
       <!-- Memory Question 5 -->
       <div class="memory-question" id="mem-q5">
         <h3>Remember when I used to brush your hair?</h3>
         <button class="btn btn-green" onclick="nextMemory()">Next</button>
       </div>
-      
       <!-- Memory Question 6 -->
       <div class="memory-question" id="mem-q6">
         <h3>
@@ -254,28 +251,30 @@
         </h3>
         <button class="btn btn-green" onclick="nextMemory()">Next</button>
       </div>
-      
       <!-- Memory Question 7 -->
       <div class="memory-question" id="mem-q7">
         <h3>Remember when I was jealous of you & Paul & Quam?</h3>
         <button class="btn btn-green" onclick="nextMemory()">Next</button>
       </div>
-      
       <!-- Memory Question 8 -->
       <div class="memory-question" id="mem-q8">
         <h3>Remember when your mom had her first impression on me? 😭</h3>
         <button class="btn btn-green" onclick="finishMemory()">Continue</button>
       </div>
     </div>
-    
-    <!-- Epistle 1 (First Apology Letter) with Typing Effect -->
+
+    <!-- ======================================================== -->
+    <!-- 8. Epistle 1 (First Apology Letter) with Typing Effect -->
+    <!-- ======================================================== -->
     <div id="epistle1" class="container hidden">
       <h2>My Love, I'm Sorry...</h2>
       <p id="epistle"></p>
       <button onclick="startInteractiveQuestions()">Continue</button>
     </div>
-    
-    <!-- Interactive Questions Section (Forgiveness) -->
+
+    <!-- ======================================================== -->
+    <!-- 9. Interactive Questions Section (Forgiveness) -->
+    <!-- ======================================================== -->
     <div id="questions" class="container">
       <!-- Question 1 -->
       <div class="question-container">
@@ -326,8 +325,10 @@
         <button class="no btn" onclick="finalInteractive(false)">No</button>
       </div>
     </div>
-    
-    <!-- Epistle 2 (Second Apology Letter) for Final Interactive 'No' -->
+
+    <!-- ======================================================== -->
+    <!-- 10. Epistle 2 (Second Apology Letter) for Final Interactive 'No' -->
+    <!-- ======================================================== -->
     <div id="epistle2" class="container">
       <h2>My Girl...</h2>
       <p>
@@ -348,41 +349,54 @@
       </p>
       <button onclick="showVideo()">Continue</button>
     </div>
-    
-    <!-- GIF Response Section -->
+
+    <!-- ======================================================== -->
+    <!-- 11. GIF Response Section -->
+    <!-- ======================================================== -->
     <div id="gif-container" class="container">
       <h2>Thank you so much babyyy! I've missed you! Now we need to talk, DM or call? ❤️</h2>
-      <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute gif">
+      <img
+        src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif"
+        alt="Cute gif"
+      />
     </div>
-    
-    <!-- Surprise Video Section -->
+
+    <!-- ======================================================== -->
+    <!-- 12. Surprise Video Section -->
+    <!-- ======================================================== -->
     <div id="video-container" class="container">
       <video width="90%" controls autoplay>
-        <source src="https://files.catbox.moe/t28ds3.mp4" type="video/mp4">
+        <source src="https://files.catbox.moe/t28ds3.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <h2>No matter what, I love you. I'm here when you're ready ❤️.</h2>
     </div>
-    
-    <!-- Background Music -->
+
+    <!-- ======================================================== -->
+    <!-- 13. Background Music -->
+    <!-- ======================================================== -->
     <audio id="background-music" loop>
-      <source src="https://files.catbox.moe/j0odtp.mp3" type="audio/mp3">
+      <source src="https://files.catbox.moe/j0odtp.mp3" type="audio/mp3" />
     </audio>
-    
+
+    <!-- ======================================================== -->
+    <!-- JavaScript Section -->
+    <!-- ======================================================== -->
     <script>
       // Pre-Check Logic
       function init() {
+        // Initially, only pre-check is visible
         document.getElementById("pre-check").style.display = "block";
       }
       
       function choosePreCheck(option) {
         if (option === 'HER') {
-          document.getElementById("pre-check").style.display = "none";
-          document.getElementById("security-check").style.display = "block";
+          document.getElementById("pre-check").classList.add("hidden");
+          document.getElementById("security-check").classList.remove("hidden");
           showSecurityQuestion(1);
         } else {
-          document.getElementById("pre-check").style.display = "none";
-          document.getElementById("denied").style.display = "block";
+          document.getElementById("pre-check").classList.add("hidden");
+          document.getElementById("denied").classList.remove("hidden");
         }
       }
       
@@ -407,20 +421,20 @@
             indicator.textContent = "";
             secCurrent++;
             if (secCurrent > 3) {
-              document.getElementById("security-check").style.display = "none";
+              document.getElementById("security-check").classList.add("hidden");
               // Show Welcome Screen
-              document.getElementById("welcome").style.display = "block";
+              document.getElementById("welcome").classList.remove("hidden");
               setTimeout(() => {
                 document.getElementById("welcome").style.opacity = 1;
                 // Start background music
                 let music = document.getElementById("background-music");
                 music.play().catch(e => console.log(e));
                 setTimeout(() => {
-                  document.getElementById("welcome").style.display = "none";
-                  document.getElementById("memory-loading").style.display = "block";
+                  document.getElementById("welcome").classList.add("hidden");
+                  document.getElementById("memory-loading").classList.remove("hidden");
                   setTimeout(() => {
-                    document.getElementById("memory-loading").style.display = "none";
-                    document.getElementById("memory-session").style.display = "block";
+                    document.getElementById("memory-loading").classList.add("hidden");
+                    document.getElementById("memory-session").classList.remove("hidden");
                     currentMemory = 0;
                     showMemory(currentMemory);
                   }, 7000); // Memory loading for 7 seconds
@@ -431,8 +445,8 @@
             }
           }, 1000);
         } else {
-          document.getElementById("security-check").style.display = "none";
-          document.getElementById("imposter-screen").style.display = "block";
+          document.getElementById("security-check").classList.add("hidden");
+          document.getElementById("imposter-screen").classList.remove("hidden");
         }
       }
       
@@ -454,7 +468,7 @@
       }
       
       function finishMemory() {
-        document.getElementById("memory-session").style.display = "none";
+        document.getElementById("memory-session").classList.add("hidden");
         // After 5 seconds, show Epistle 1 (with smooth fade-in)
         setTimeout(() => {
           let epistle = document.getElementById("epistle1");
@@ -465,8 +479,8 @@
       
       // Epistle 1 -> Interactive Questions Transition
       function startInteractiveQuestions() {
-        document.getElementById("epistle1").style.display = "none";
-        document.getElementById("questions").style.display = "block";
+        document.getElementById("epistle1").classList.add("hidden");
+        document.getElementById("questions").classList.remove("hidden");
         currentQuestion = 0;
         showQuestion(currentQuestion);
       }
@@ -513,57 +527,21 @@
       }
       
       function forgiveMe() {
-        document.getElementById("questions").style.display = "none";
-        document.getElementById("gif-container").style.display = "block";
+        document.getElementById("questions").classList.add("hidden");
+        document.getElementById("gif-container").classList.remove("hidden");
       }
       
       function showEpistle2() {
-        document.getElementById("questions").style.display = "none";
-        document.getElementById("epistle2").style.display = "block";
+        document.getElementById("questions").classList.add("hidden");
+        document.getElementById("epistle2").classList.remove("hidden");
         document.getElementById("epistle2").style.opacity = 1;
       }
       
       function showVideo() {
-        document.getElementById("epistle2").style.display = "none";
-        document.getElementById("video-container").style.display = "block";
+        document.getElementById("epistle2").classList.add("hidden");
+        document.getElementById("video-container").classList.remove("hidden");
       }
     </script>
     
-    <!-- Pre-Check HTML (for proper load order) -->
-    <div id="pre-check" class="container">
-      <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL!</h2>
-      <p>Are you her or are you NAY?</p>
-      <button class="option-btn green" onclick="choosePreCheck('HER')">HER</button>
-      <button class="option-btn red" onclick="choosePreCheck('NAY')">NAY</button>
-    </div>
-    
-    <!-- Security Check HTML -->
-    <div id="security-check" class="container">
-      <h2>Before you proceed...</h2>
-      <p>We need to know if you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
-      <div class="security-question" id="sec-q1">
-        <h3>1. What's Taylor Swift's lucky number?</h3>
-        <button class="option-btn" onclick="checkSecAnswer(1, 'A')">A. 13</button>
-        <button class="option-btn" onclick="checkSecAnswer(1, 'B')">B. 27</button>
-        <button class="option-btn" onclick="checkSecAnswer(1, 'C')">C. 22</button>
-        <button class="option-btn" onclick="checkSecAnswer(1, 'D')">D. 15</button>
-        <div class="sec-indicator" id="indicator-1"></div>
-      </div>
-      <div class="security-question" id="sec-q2">
-        <h3>2. What color are Sammy's crush's eyes?</h3>
-        <button class="option-btn" onclick="checkSecAnswer(2, 'A')">A. Green</button>
-        <button class="option-btn" onclick="checkSecAnswer(2, 'B')">B. Yellow</button>
-        <button class="option-btn" onclick="checkSecAnswer(2, 'C')">C. Black</button>
-        <button class="option-btn" onclick="checkSecAnswer(2, 'D')">
-          D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love, the power to leave me speechless, the color of every beautiful thing.
-        </button>
-        <div class="sec-indicator" id="indicator-2"></div>
-      </div>
-      <div class="security-question" id="sec-q3">
-        <h3>3. What is Sammy's babe's favorite drink?</h3>
-        <button class="option-btn" onclick="checkSecAnswer(3, 'A')">A. Fanta</button>
-        <button class="option-btn" onclick="checkSecAnswer(3, 'B')">B. Malt</button>
-        <button class="option-btn" onclick="checkSecAnswer(3, 'C')">C. Chapman</button>
-        <button class="option-btn" onclick="checkSecAnswer(3, 'D')">D. Orange Juice</button>
-        <div class="sec-indicator" id="indicator-3"></div>
-      </div>\n    </div>\n\n    <!-- End of Project A Code -->\n"}]}
+  </body>
+</html>
