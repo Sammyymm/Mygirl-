@@ -19,7 +19,6 @@
       text-align: center;
       transition: opacity 1s;
     }
-    /* Common container style */
     .container {
       width: 90%;
       max-width: 600px;
@@ -58,11 +57,9 @@
     /* Memory Session */
     #memory-session { display: none; }
     .memory-question { display: none; margin-bottom: 20px; }
-    /* Epistle 1 */
-    #epistle1 { display: none; opacity: 0; transition: opacity 1s ease-in; }
-    /* Epistle 2 (Second Apology) */
-    #epistle2 { display: none; opacity: 0; transition: opacity 1s ease-in; }
-    /* Interactive Questions Section (Forgiveness) */
+    /* Epistle Sections with Typing Effect */
+    #epistle1, #epistle2 { display: none; opacity: 0; transition: opacity 1s ease-in; }
+    /* Interactive Questions Section */
     #questions { display: none; }
     .question-container { display: none; }
     .btn {
@@ -79,10 +76,31 @@
     .yes { background: green; color: white; }
     .no { background: red; color: white; }
     /* Response Screens */
-    #gif-container, #video-container { display: none; }
+    #gif-container, #video-container, #final-options { display: none; }
     #gif-container img { width: 80%; }
     h2 { color: gold; }
     h3 { color: cyan; }
+    /* Final Options Layout */
+    #final-options-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .final-option {
+      flex: 1 1 30%;
+      margin: 10px;
+      padding: 10px;
+      border: 2px solid white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .final-option:hover { background: rgba(255,255,255,0.2); }
+    #final-indicator {
+      color: lightgreen;
+      font-weight: bold;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body onload="init()">
@@ -159,57 +177,44 @@
 <!-- Memory Session -->
 <div id="memory-session" class="container">
   <h2>Memory Lane</h2>
-  <!-- Memory Question 1 -->
   <div class="memory-question" id="mem-q1">
     <h3>Do you remember the first time we met when you were still wearing a straight skirt? 🥹</h3>
     <button class="btn btn-green" onclick="nextMemory()">Next</button>
   </div>
-  <!-- Memory Question 2 -->
   <div class="memory-question" id="mem-q2">
     <h3>Remember when I messed up our first kiss? 🤦🏾</h3>
     <button class="btn btn-green" onclick="nextMemory()">Next</button>
   </div>
-  <!-- Memory Question 3 -->
   <div class="memory-question" id="mem-q3">
-    <h3>Remember when we usually sit together and held hands in class?</h3>
+    <h3>Remember when we usually sat together and held hands in class?</h3>
     <button class="btn btn-green" onclick="nextMemory()">Next</button>
   </div>
-  <!-- Memory Question 4 -->
   <div class="memory-question" id="mem-q4">
     <h3>Remember when moth entered the class and you hid under the table?</h3>
     <button class="btn btn-green" onclick="nextMemory()">Next</button>
   </div>
-  <!-- Memory Question 5 -->
   <div class="memory-question" id="mem-q5">
     <h3>Remember when I used to brush your hair?</h3>
     <button class="btn btn-green" onclick="nextMemory()">Next</button>
   </div>
-  <!-- Memory Question 6 -->
   <div class="memory-question" id="mem-q6">
-    <h3>Remember when we first wore matching hoodies and everyone were staring at us?</h3>
+    <h3>Remember when we first wore matching hoodies and everyone stared at us?</h3>
     <button class="btn btn-green" onclick="nextMemory()">Next</button>
   </div>
-  <!-- Memory Question 7 -->
   <div class="memory-question" id="mem-q7">
-    <h3>Remember when I was jealous of you bein w Paul & Quam and you left them for me?</h3>
+    <h3>Remember when I was jealous of you being with Paul & Quam and you left them for me?</h3>
     <button class="btn btn-green" onclick="nextMemory()">Next</button>
   </div>
-  <!-- Memory Question 8 -->
   <div class="memory-question" id="mem-q8">
     <h3>Remember when your mom had her first impression on me? 😭</h3>
     <button class="btn btn-green" onclick="finishMemory()">Continue</button>
   </div>
 </div>
 
-<!-- Epistle 1 (First Apology Letter) -->
+<!-- Epistle 1 (First Apology Letter) with Typing Effect -->
 <div id="epistle1" class="container">
   <h2>My Love, I'm Sorry...</h2>
-  <p>
-    Moyin,<br>
-    At this point, if you ever leave me, I'd be in total devastation. I trust you with everything, and I just hope you never give me a reason to regret it. I love you more than words can say. I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.<br>
-    You mean the absolute world to me, and I don’t take you for granted. I love you more than words can express, and I just want to make things right between us. I’ve left my guard down completely for you, and if you ever left, I'd be devastated. You’re the one I trust with everything, and I never want to do anything to make you regret choosing me.<br>
-    Please forgive me, Moyin. You’re too special to me to let this come between us. 💙
-  </p>
+  <p id="epistle1-text"></p>
   <button onclick="startInteractiveQuestions()">Continue</button>
 </div>
 
@@ -265,14 +270,10 @@
   </div>
 </div>
 
-<!-- Epistle 2 (Second Apology Letter) for Final Interactive 'No' -->
+<!-- Epistle 2 (Second Apology Letter) with Typing Effect -->
 <div id="epistle2" class="container">
   <h2>My Girl...</h2>
-  <p>
-    My girl, I seriously want you to know no one can ever take your place. You're my first and only love. I have fallen so deeply in love with you that I can't even process it—you literally control my emotions, and when I realized it, I just thought, "Wow, I'm cooked." This is what falling in love feels like.<br>
-    Remember when I told you I wasn't going all out because I was still keeping my guard up? You convinced me to let it down, and I love you regardless. I could let my friendship with anyone go because of you; you're my number one person.<br>
-    I want you to know how special you are to me. I admit my mistakes—I didn't consider your feelings, and I know you wouldn't do the same to me. I'm truly sorry for what I did. I'm sorry for not telling you, not listening, and not considering you. Now please come back to me, baby, and release me from my punishment. 😔💔
-  </p>
+  <p id="epistle2-text"></p>
   <button onclick="showVideo()">Continue</button>
 </div>
 
@@ -282,13 +283,49 @@
   <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute gif">
 </div>
 
-<!-- Surprise Video Section -->
+<!-- Surprise Video Section with Finish Button -->
 <div id="video-container" class="container">
-  <video width="90%" controls autoplay>
+  <video id="surprise-video" width="90%" controls autoplay>
     <source src="https://files.catbox.moe/t28ds3.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   <h2>No matter what, I love you. I'm here when you're ready ❤️.</h2>
+  <button class="btn btn-green" onclick="showFinalOptions()">Finish</button>
+</div>
+
+<!-- Final Options Section -->
+<div id="final-options" class="container">
+  <h2>Please select one option below (You can only pick one):</h2>
+  <div id="final-options-container" style="display: flex; justify-content: space-around; flex-wrap: wrap;">
+    <div class="final-option" id="optionA" onclick="selectOption('A')" style="cursor:pointer;">
+      <div style="font-size: 50px;">🎤</div>
+      <h3>LYRICS THAT REPRESENTS YOU</h3>
+      <p>
+        You know it's not the same as it was - Harry Styles<br>
+        I think we talked about a TV show that you liked. Something I forgot cos I was thinking "whoa, her eyes are real?" - BWU<br>
+        I lose my brain cells when I'm with you - Boywithuke<br>
+        I fell through the fuckin room when I saw you walking through the hallway zone - BWU<br>
+        It's the reason I'm afraid, you're the thoughts that can't be tamed and I'm trying to be sane - Dream<br>
+        Sorry but I can't just stop liking you, I hope these other guys won't see you as pretty as I do - BWU<br>
+        I'll see you soon 'cause I miss you - BWU<br>
+        Please don't break my heart - BWU<br>
+        I know I might seem childish coding this - BWU<br>
+        This ain't good for my health, no this ain't good for my health - BWU<br>
+        (More to come...)
+      </p>
+    </div>
+    <div class="final-option" id="optionB" onclick="selectOption('B')" style="cursor:pointer;">
+      <div style="font-size: 50px;">📈</div>
+      <h3>HOW EBUKA HAS BEEN DOING</h3>
+      <p>(These past few days)</p>
+    </div>
+    <div class="final-option" id="optionC" onclick="selectOption('C')" style="cursor:pointer;">
+      <div style="font-size: 50px;">📖</div>
+      <h3>THE STORY OF WHAT HAPPENED</h3>
+      <p>(The truth revealed)</p>
+    </div>
+  </div>
+  <p id="final-indicator" style="color: lightgreen; font-weight: bold; margin-top: 10px;"></p>
 </div>
 
 <!-- Background Music -->
@@ -297,9 +334,39 @@
 </audio>
 
 <script>
+  // Typing effect function for epistles
+  function typeText(element, text, speed) {
+    element.innerHTML = "";
+    let i = 0;
+    let interval = setInterval(() => {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, speed);
+  }
+  
+  // Epistle texts
+  const epistle1Text = "Moyin,\nAt this point, if you ever leave me, I'd be in total devastation. I trust you with everything, and I just hope you never give me a reason to regret it. I love you more than words can say. I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.\nYou mean the absolute world to me, and I don’t take you for granted. I love you more than words can express, and I just want to make things right between us. I’ve left my guard down completely for you, and if you ever left, I'd be devastated. You’re the one I trust with everything, and I never want to do anything to make you regret choosing me.\nPlease forgive me, Moyin. You’re too special to me to let this come between us. 💙";
+  
+  const epistle2Text = "My girl, I seriously want you to know no one can ever take your place. You're my first and only love. I have fallen so deeply in love with you that I can't even process it—you literally control my emotions, and when I realized it, I just thought, \"Wow, I'm cooked.\" This is what falling in love feels like.\nRemember when I told you I wasn't going all out because I was still keeping my guard up? You convinced me to let it down, and I love you regardless. I could let my friendship with anyone go because of you; you're my number one person.\nI want you to know how special you are to me. I admit my mistakes—I didn't consider your feelings, and I know you wouldn't do the same to me. I'm truly sorry for what I did. I'm sorry for not telling you, not listening, and not considering you. Now please come back to me, baby, and release me from my punishment. 😔💔";
+  
   // Pre-Check Logic
   function init() {
     document.getElementById("pre-check").style.display = "block";
+    
+    // Pause music when video plays, resume after video ends.
+    const videoElem = document.getElementById("surprise-video");
+    if(videoElem) {
+      videoElem.addEventListener("play", () => {
+        document.getElementById("background-music").pause();
+      });
+      videoElem.addEventListener("ended", () => {
+        document.getElementById("background-music").play();
+      });
+    }
   }
   
   function choosePreCheck(option) {
@@ -351,7 +418,7 @@
                 document.getElementById("memory-session").style.display = "block";
                 currentMemory = 0;
                 showMemory(currentMemory);
-              }, 7000); // Memory loading for 7 seconds
+              }, 7000);
             }, 3000);
           }, 100);
         } else {
@@ -383,11 +450,11 @@
   
   function finishMemory() {
     document.getElementById("memory-session").style.display = "none";
-    // After 5 seconds, show Epistle 1 (with smooth fade-in)
+    // After 5 seconds, show Epistle 1 with typing effect
     setTimeout(() => {
       let epistle = document.getElementById("epistle1");
       epistle.style.display = "block";
-      epistle.style.opacity = 1;
+      typeText(document.getElementById("epistle1-text"), epistle1Text, 50);
     }, 5000);
   }
   
@@ -413,77 +480,6 @@
   function nextInteractive(answeredYes, btn) {
     if (currentQuestion < questionContainers.length - 1) {
       if (!answeredYes) {
-        yesSize += 20;  
+        yesSize += 20;
         noSize = Math.max(noSize - 10, 40);
-        let container = questionContainers[currentQuestion];
-        let yesBtn = container.querySelector(".yes");
-        let noBtn = container.querySelector(".no");
-        yesBtn.style.width = yesSize + "px";
-        yesBtn.style.height = (yesSize * 0.5) + "px";
-        noBtn.style.width = noSize + "px";
-        noBtn.style.height = (noSize * 0.5) + "px";
-        // Randomly swap positions:
-        if (Math.random() < 0.5) {
-          let parent = container;
-          parent.insertBefore(noBtn, yesBtn);
-        }
-      }
-      currentQuestion++;
-      showQuestion(currentQuestion);
-    }
-  }
-  
-  function finalInteractive(answeredYes) {
-    if (answeredYes) {
-      forgiveMe();
-    } else {
-      showEpistle2();
-    }
-  }
-  
-  function forgiveMe() {
-    document.getElementById("questions").style.display = "none";
-    document.getElementById("gif-container").style.display = "block";
-  }
-  
-  function showEpistle2() {
-    document.getElementById("questions").style.display = "none";
-    document.getElementById("epistle2").style.display = "block";
-    document.getElementById("epistle2").style.opacity = 1;
-  }
-  
-  function showVideo() {
-    document.getElementById("epistle2").style.display = "none";
-    document.getElementById("video-container").style.display = "block";
-  }
-</script>
-
-<!-- Pre-Check HTML (for proper load order) -->
-<div id="pre-check" class="container">
-  <h2>THIS SITE IS ONLY FOR SAMMY'S GIRL!</h2>
-  <p>Are you her or are you NAY?</p>
-  <button class="option-btn green" onclick="choosePreCheck('HER')">HER</button>
-  <button class="option-btn red" onclick="choosePreCheck('NAY')">NAY</button>
-</div>
-
-<!-- Security Check HTML -->
-<div id="security-check" class="container">
-  <h2>Before you proceed...</h2>
-  <p>We need to know if you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
-  <div class="security-question" id="sec-q1">
-    <h3>1. What's Taylor Swift's lucky number?</h3>
-    <button class="option-btn" onclick="checkSecAnswer(1, 'A')">A. 13</button>
-    <button class="option-btn" onclick="checkSecAnswer(1, 'B')">B. 27</button>
-    <button class="option-btn" onclick="checkSecAnswer(1, 'C')">C. 22</button>
-    <button class="option-btn" onclick="checkSecAnswer(1, 'D')">D. 15</button>
-    <div class="sec-indicator" id="indicator-1"></div>
-  </div>
-  <div class="security-question" id="sec-q2">
-    <h3>2. What color are Sammy's crush's eyes?</h3>
-    <button class="option-btn" onclick="checkSecAnswer(2, 'A')">A. Green</button>
-    <button class="option-btn" onclick="checkSecAnswer(2, 'B')">B. Yellow</button>
-    <button class="option-btn" onclick="checkSecAnswer(2, 'C')">C. Black</button>
-    <button class="option-btn" onclick="checkSecAnswer(2, 'D')">
-      D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love, the power to leave me speechless, the color of every beautiful thing. Your eyes have this way of catching the light differently everytime he looks at them even makes them more beautiful. No matter the shade, they always stand out.
-    </button>
-    <div class
+        let container = questionContain
