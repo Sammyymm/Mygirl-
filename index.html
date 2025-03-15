@@ -16,6 +16,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       min-height: 100vh;
       text-align: center;
       transition: opacity 1s;
@@ -28,13 +29,21 @@
       border-radius: 10px;
       margin: 20px auto;
     }
-    .hidden { display: none; }
-    /* Pre-check, Denied, Security, Imposter, Welcome */
-    #pre-check { }
-    #denied { }
-    #security-check { }
-    .security-question { display: none; margin-bottom: 20px; }
-    .sec-indicator { color: lightgreen; font-weight: bold; margin-top: 10px; }
+    .hidden {
+      display: none;
+    }
+    /* Pre-Check, Denied, Security, Imposter, Welcome, Memory, Epistle Sections */
+    .security-question,
+    .memory-question,
+    .question-container {
+      display: none;
+      margin-bottom: 20px;
+    }
+    .sec-indicator {
+      color: lightgreen;
+      font-weight: bold;
+      margin-top: 10px;
+    }
     .option-btn {
       display: block;
       margin: 8px auto;
@@ -47,20 +56,51 @@
       white-space: normal;
     }
     .option-btn.green { background: green; color: white; }
-    .option-btn.red { background: red; color: white; }
-    #imposter-screen { }
-    #welcome { opacity: 0; transition: opacity 1s ease-in; }
-    /* Memory Loading & Session */
-    #memory-loading { }
-    #memory-session { }
-    .memory-question { display: none; margin-bottom: 20px; }
-    /* Epistle Sections */
-    #epistle1, #epistle2 { opacity: 0; transition: opacity 1s ease-in; }
+    .option-btn.red   { background: red; color: white; }
+    /* Yes/No Buttons for Interactive Questions */
+    .btn {
+      border: none;
+      padding: 10px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      width: 120px;
+      height: 50px;
+    }
+    .yes { background: green; color: white; }
+    .no  { background: red; color: white; }
+    /* Section Headings Colors */
+    h2 { color: gold; }
+    h3 { color: cyan; }
+    /* Final Options Layout */
+    #final-options-container {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    .final-option {
+      flex: 1 1 30%;
+      margin: 10px;
+      padding: 10px;
+      border: 2px solid white;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .final-option:hover { background: rgba(255,255,255,0.2); }
+    #final-indicator {
+      color: lightgreen;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    /* Ensure epistle sections are visible (for typing effect) */\n    #epistle1, #epistle2 { display: block; }
   </style>
 </head>
 <body onload="init()">
 
-  <!-- Pre-check Landing Page -->
+  <!-- Pre-Check Landing Page -->
   <div id="pre-check" class="container">
     <h2>THIS SITE IS ONLY FOR EBUKA'S GIRL!</h2>
     <p>Are you her or are you NAY?</p>
@@ -158,321 +198,13 @@
       <button class="btn btn-green" onclick="nextMemory()">Next</button>
     </div>
     <div class="memory-question" id="mem-q8">
-      <h3>Remember when your mom had her first impression on me? 😭</h3>
-      <button class="btn btn-green" onclick="finishMemory()">Continue</button>
-    </div>
-  </div>
+      <h3>Remember when your mom had her first impression on me? 😭</h3>\n      <button class="btn btn-green" onclick="finishMemory()">Continue</button>\n    </div>\n  </div>\n\n  <!-- Epistle 1 (First Apology Letter) with Typing Effect -->\n  <div id=\"epistle1\" class=\"container hidden\">\n    <h2>My Love, I'm Sorry...</h2>\n    <p id=\"epistle1-text\"></p>\n    <button onclick=\"startInteractiveQuestions()\">Continue</button>\n  </div>\n\n  <!-- Interactive Questions Section (Forgiveness) -->\n  <div id=\"questions\" class=\"container hidden\">\n    <div class=\"question-container\">\n      <h3>Hey baby, I miss you, do you care to check up on me? 😔</h3>\n      <button class=\"yes btn\" onclick=\"nextInteractive(true, this)\">Yes</button>\n      <button class=\"no btn\" onclick=\"nextInteractive(false, this)\">No</button>\n    </div>\n    <div class=\"question-container\">\n      <h3>Wow, uhm, are you still mad at me?</h3>\n      <button class=\"yes btn\" onclick=\"nextInteractive(true, this)\">Yes</button>\n      <button class=\"no btn\" onclick=\"nextInteractive(false, this)\">No</button>\n    </div>\n    <div class=\"question-container\">\n      <h3>Do you want to talk with me?</h3>\n      <button class=\"yes btn\" onclick=\"nextInteractive(true, this)\">Yes</button>\n      <button class=\"no btn\" onclick=\"nextInteractive(false, this)\">No</button>\n    </div>\n    <div class=\"question-container\">\n      <h3>For reals?</h3>\n      <button class=\"yes btn\" onclick=\"nextInteractive(true, this)\">Yes</button>\n      <button class=\"no btn\" onclick=\"nextInteractive(false, this)\">No</button>\n    </div>\n    <div class=\"question-container\">\n      <h3>If I asked for a hug now, would you give me?</h3>\n      <button class=\"yes btn\" onclick=\"nextInteractive(true, this)\">Yes</button>\n      <button class=\"no btn\" onclick=\"nextInteractive(false, this)\">No</button>\n    </div>\n    <div class=\"question-container\">\n      <h3>Do you even miss me?</h3>\n      <button class=\"yes btn\" onclick=\"nextInteractive(true, this)\">Yes</button>\n      <button class=\"no btn\" onclick=\"nextInteractive(false, this)\">No</button>\n    </div>\n    <div class=\"question-container\">\n      <h3>Breaking down, while coding this... Uhm, can I call you?</h3>\n      <button class=\"yes btn\" onclick=\"nextInteractive(true, this)\">Yes</button>\n      <button class=\"no btn\" onclick=\"nextInteractive(false, this)\">No</button>\n    </div>\n    <div class=\"question-container\">\n      <h3>I miss you so much, do you wanna speak with me?</h3>\n      <button class=\"yes btn\" onclick=\"finalInteractive(true)\">Yes</button>\n      <button class=\"no btn\" onclick=\"finalInteractive(false)\">No</button>\n    </div>\n  </div>\n\n  <!-- Epistle 2 (Second Apology Letter) with Typing Effect -->\n  <div id=\"epistle2\" class=\"container hidden\">\n    <h2>My Girl...</h2>\n    <p id=\"epistle2-text\"></p>\n    <button onclick=\"showVideo()\">Continue</button>\n  </div>\n\n  <!-- GIF Response Section -->\n  <div id=\"gif-container\" class=\"container hidden\">\n    <h2>Thank you so much babyyy! I've missed you! Now we need to talk, DM or call? ❤️</h2>\n    <img src=\"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif\" alt=\"Cute gif\">\n  </div>\n\n  <!-- Surprise Video Section with Finish Button -->\n  <div id=\"video-container\" class=\"container hidden\">\n    <video id=\"surprise-video\" width=\"90%\" controls autoplay>\n      <source src=\"https://files.catbox.moe/t28ds3.mp4\" type=\"video/mp4\">\n      Your browser does not support the video tag.\n    </video>\n    <h2>No matter what, I love you. I'm here when you're ready ❤️.</h2>\n    <button class=\"btn btn-green\" onclick=\"showFinalOptions()\">Finish</button>\n  </div>\n\n  <!-- Final Options Section -->\n  <div id=\"final-options\" class=\"container hidden\">\n    <h2>Please select one option below (You can only pick one):</h2>\n    <div id=\"final-options-container\" style=\"display: flex; justify-content: space-around; flex-wrap: wrap;\">\n      <div class=\"final-option\" id=\"optionA\" onclick=\"selectOption('A')\" style=\"cursor:pointer;\">\n        <div style=\"font-size: 50px;\">🎤</div>\n        <h3>LYRICS THAT REPRESENTS YOU</h3>\n        <p>\n          You know it's not the same as it was - Harry Styles<br>\n          I think we talked about a TV show that you liked. Something I forgot cos I was thinking \"whoa, her eyes are real?\" - BWU<br>\n          I lose my brain cells when I'm with you - Boywithuke<br>\n          I fell through the fuckin room when I saw you walking through the hallway zone - BWU<br>\n          It's the reason I'm afraid, you're the thoughts that can't be tamed and I'm trying to be sane - Dream<br>\n          Sorry but I can't just stop liking you, I hope these other guys won't see you as pretty as I do - BWU<br>\n          I'll see you soon 'cause I miss you - BWU<br>\n          Please don't break my heart - BWU<br>\n          I know I might seem childish coding this - BWU<br>\n          This ain't good for my health, no this ain't good for my health - BWU<br>\n          (More to come...)\n        </p>\n      </div>\n      <div class=\"final-option\" id=\"optionB\" onclick=\"selectOption('B')\" style=\"cursor:pointer;\">\n        <div style=\"font-size: 50px;\">📈</div>\n        <h3>HOW EBUKA HAS BEEN DOING</h3>\n        <p>(These past few days)</p>\n      </div>\n      <div class=\"final-option\" id=\"optionC\" onclick=\"selectOption('C')\" style=\"cursor:pointer;\">\n        <div style=\"font-size: 50px;\">📖</div>\n        <h3>THE STORY OF WHAT HAPPENED</h3>\n        <p>(The truth revealed)</p>\n      </div>\n    </div>\n    <p id=\"final-indicator\" style=\"color: lightgreen; font-weight: bold; margin-top: 10px;\"></p>\n  </div>\n\n  <!-- Background Music -->\n  <audio id=\"background-music\" loop>\n    <source src=\"https://files.catbox.moe/j0odtp.mp3\" type=\"audio/mp3\">\n  </audio>\n\n  <script>\n    // Typing effect function for epistles\n    function typeText(element, text, speed) {\n      element.innerHTML = \"\";\n      let i = 0;\n      let interval = setInterval(() => {\n        if (i < text.length) {\n          element.innerHTML += text.charAt(i);\n          i++;\n        } else {\n          clearInterval(interval);\n        }\n      }, speed);\n    }\n    \n    // Epistle texts\n    const epistle1Text = \"Moyin,\\nAt this point, if you ever leave me, I'd be in total devastation. I trust you with everything, and I just hope you never give me a reason to regret it. I love you more than words can say. I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.\\nYou mean the absolute world to me, and I don’t take you for granted. I love you more than words can express, and I just want to make things right between us. I’ve left my guard down completely for you, and if you ever left, I'd be devastated. You’re the one I trust with everything, and I never want to do anything to make you regret choosing me.\\nPlease forgive me, Moyin. You’re too special to me to let this come between us. 💙\";\n    \n    const epistle2Text = \"My girl, I seriously want you to know no one can ever take your place. You're my first and only love. I have fallen so deeply in love with you that I can't even process it—you literally control my emotions, and when I realized it, I just thought, \\\"Wow, I'm cooked.\\\" This is what falling in love feels like.\\nRemember when I told you I wasn't going all out because I was still keeping my guard up? You convinced me to let it down, and I love you regardless. I could let my friendship with anyone go because of you; you're my number one person.\\nI want you to know how special you are to me. I admit my mistakes—I didn't consider your feelings, and I know you wouldn't do the same to me. I'm truly sorry for what I did. I'm sorry for not telling you, not listening, and not considering you. Now please come back to me, baby, and release me from my punishment. 😔💔\";\n    \n    // Pre-Check Logic\n    function init() {\n      document.getElementById(\"pre-check\").style.display = \"block\";\n      // Attach video event listeners for music pause/resume.\n      const videoElem = document.getElementById(\"surprise-video\");\n      if(videoElem) {\n        videoElem.addEventListener(\"play\", () => {\n          document.getElementById(\"background-music\").pause();\n        });\n        videoElem.addEventListener(\"ended\", () => {\n          document.getElementById(\"background-music\").play();\n        });\n      }\n    }\n    \n    function choosePreCheck(option) {\n      if (option === 'HER') {\n        document.getElementById(\"pre-check\").style.display = \"none\";\n        document.getElementById(\"security-check\").style.display = \"block\";\n        showSecurityQuestion(1);\n      } else {\n        document.getElementById(\"pre-check\").style.display = \"none\";\n        document.getElementById(\"denied\").style.display = \"block\";\n      }\n    }\n    \n    // Security Check Logic\n    let correctSecAnswers = {1: 'A', 2: 'D', 3: 'C'};\n    let secCurrent = 1;\n    \n    function showSecurityQuestion(num) {\n      let secs = document.querySelectorAll(\".security-question\");\n      secs.forEach(sec => sec.style.display = \"none\");\n      let currentSec = document.getElementById(\"sec-q\" + num);\n      if (currentSec) currentSec.style.display = \"block\";\n    }\n    \n    function checkSecAnswer(question, choice) {\n      if (correctSecAnswers[question] === choice) {\n        let indicator = document.getElementById(\"indicator-\" + question);\n        indicator.textContent = \"Correct!\";\n        setTimeout(() => {\n          indicator.textContent = \"\";\n          secCurrent++;\n          if (secCurrent > 3) {\n            document.getElementById(\"security-check\").style.display = \"none\";\n            // Show Welcome Screen\n            document.getElementById(\"welcome\").style.display = \"block\";\n            setTimeout(() => {\n              document.getElementById(\"welcome\").style.opacity = 1;\n              let music = document.getElementById(\"background-music\");\n              music.play().catch(e => console.log(e));\n              setTimeout(() => {\n                document.getElementById(\"welcome\").style.display = \"none\";\n                document.getElementById(\"memory-loading\").style.display = \"block\";\n                setTimeout(() => {\n                  document.getElementById(\"memory-loading\").style.display = \"none\";\n                  document.getElementById(\"memory-session\").style.display = \"block\";\n                  currentMemory = 0;\n                  showMemory(currentMemory);\n                }, 7000);\n              }, 3000);\n            }, 100);\n          } else {\n            showSecurityQuestion(secCurrent);\n          }\n        }, 1000);\n      } else {\n        document.getElementById(\"security-check\").style.display = \"none\";\n        document.getElementById(\"imposter-screen\").style.display = \"block\";\n      }\n    }\n    \n    // Memory Session Logic\n    let currentMemory = 0;\n    const memoryQuestions = document.querySelectorAll(\".memory-question\");\n    \n    function showMemory(index) {\n      memoryQuestions.forEach((mq, i) => {\n        mq.style.display = (i === index) ? \"block\" : \"none\";\n      });\n    }\n    \n    function nextMemory() {\n      currentMemory++;\n      if (currentMemory < memoryQuestions.length) {\n        showMemory(currentMemory);\n      }\n    }\n    \n    function finishMemory() {\n      document.getElementById(\"memory-session\").style.display = \"none\";\n      // After 5 seconds, show Epistle 1 with typing effect\n      setTimeout(() => {\n        let epistle = document.getElementById(\"epistle1\");\n        epistle.style.display = \"block\";\n        typeText(document.getElementById(\"epistle1-text\"), epistle1Text, 50);\n      }, 5000);\n    }\n    \n    // Epistle 1 -> Interactive Questions Transition\n    function startInteractiveQuestions() {\n      document.getElementById(\"epistle1\").style.display = \"none\";\n      document.getElementById(\"questions\").style.display = \"block\";\n      currentQuestion = 0;\n      showQuestion(currentQuestion);\n    }\n    \n    // Interactive Questions Logic\n    let yesSize = 120, noSize = 120;\n    let currentQuestion;\n    const questionContainers = document.querySelectorAll(\".question-container\");\n    \n    function showQuestion(index) {\n      questionContainers.forEach((container, i) => {\n        container.style.display = (i === index) ? \"block\" : \"none\";\n      });\n    }\n    \n    function nextInteractive(answeredYes, btn) {\n      if (currentQuestion < questionContainers.length - 1) {\n        if (!answeredYes) {\n          yesSize += 20;\n          noSize = Math.max(noSize - 10, 40);\n          let container = questionContainers[currentQuestion];\n          let yesBtn = container.querySelector(\".yes\");\n          let noBtn = container.querySelector(\".no\");\n          yesBtn.style.width = yesSize + \"px\";\n          yesBtn.style.height = (yesSize * 0.5) + \"px\";\n          noBtn.style.width = noSize + \"px\";\n          noBtn.style.height = (noSize * 0.5) + \"px\";\n          if (Math.random() < 0.5) {\n            let parent = container;\n            parent.insertBefore(noBtn, yesBtn);\n          }\n        }\n        currentQuestion++;\n        showQuestion(currentQuestion);\n      }\n    }\n    \n    function finalInteractive(answeredYes) {\n      if (answeredYes) {\n        forgiveMe();\n      } else {\n        showEpistle2();\n      }\n    }\n    \n    function forgiveMe() {\n      document.getElementById(\"questions\").style.display = \"none\";\n      document.getElementById(\"gif-container\").style.display = \"block\";\n    }\n    \n    function showEpistle2() {\n      document.getElementById(\"questions\").style.display = \"none\";\n      let epistle = document.getElementById(\"epistle2\");\n      epistle.style.display = \"block\";\n      typeText(document.getElementById(\"epistle2-text\"), epistle2Text, 50);\n    }\n    \n    function showVideo() {\n      document.getElementById(\"epistle2\").style.display = \"none\";\n      document.getElementById(\"video-container\").style.display = \"block\";\n    }\n    \n    // Final Options Logic\n    function showFinalOptions() {\n      document.getElementById(\"video-container\").style.display = \"none\";\n      document.getElementById(\"final-options\").style.display = \"block\";\n    }\n    \n    function selectOption(option) {\n      let options = document.querySelectorAll(\".final-option\");\n      options.forEach(opt => opt.style.pointerEvents = \"none\");\n      document.getElementById(\"final-indicator\").textContent = \"You have selected option \" + option + \".\";\n    }\n  </script>\n</body>\n</html>\n```
 
-  <!-- Epistle 1 (First Apology Letter) with Typing Effect -->
-  <div id="epistle1" class="container hidden">
-    <h2>My Love, I'm Sorry...</h2>
-    <p id="epistle1-text"></p>
-    <button onclick="startInteractiveQuestions()">Continue</button>
-  </div>
-  <!-- Interactive Questions Section (Forgiveness) -->
-  <div id="questions" class="container hidden">
-    <div class="question-container">
-      <h3>Hey baby, I miss you, do you care to check up on me? 😔</h3>
-      <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
-      <button class="no btn" onclick="nextInteractive(false, this)">No</button>
-    </div>
-    <div class="question-container">
-      <h3>Wow, uhm, are you still mad at me?</h3>
-      <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
-      <button class="no btn" onclick="nextInteractive(false, this)">No</button>
-    </div>
-    <div class="question-container">
-      <h3>Do you want to talk with me?</h3>
-      <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
-      <button class="no btn" onclick="nextInteractive(false, this)">No</button>
-    </div>
-    <div class="question-container">
-      <h3>For reals?</h3>
-      <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
-      <button class="no btn" onclick="nextInteractive(false, this)">No</button>
-    </div>
-    <div class="question-container">
-      <h3>If I asked for a hug now, would you give me?</h3>
-      <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
-      <button class="no btn" onclick="nextInteractive(false, this)">No</button>
-    </div>
-    <div class="question-container">
-      <h3>Do you even miss me?</h3>
-      <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
-      <button class="no btn" onclick="nextInteractive(false, this)">No</button>
-    </div>
-    <div class="question-container">
-      <h3>Breaking down, while coding this... Uhm, can I call you?</h3>
-      <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
-      <button class="no btn" onclick="nextInteractive(false, this)">No</button>
-    </div>
-    <div class="question-container">
-      <h3>I miss you so much, do you wanna speak with me?</h3>
-      <button class="yes btn" onclick="finalInteractive(true)">Yes</button>
-      <button class="no btn" onclick="finalInteractive(false)">No</button>
-    </div>
-  </div>
+---
 
-  <!-- Epistle 2 (Second Apology Letter) with Typing Effect -->
-  <div id="epistle2" class="container hidden">
-    <h2>My Girl...</h2>
-    <p id="epistle2-text"></p>
-    <button onclick="showVideo()">Continue</button>
-  </div>
+### Instructions:
+1. Copy the entire code above (from `<!DOCTYPE html>` to `</html>`).
+2. Paste it into a new file in VS Code and save as `index.html`.
+3. Open the file in your browser to test the site.
 
-  <!-- GIF Response Section -->
-  <div id="gif-container" class="container hidden">
-    <h2>Thank you so much babyyy! I've missed you! Now we need to talk, DM or call? ❤️</h2>
-    <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute gif">
-  </div>
-
-  <!-- Surprise Video Section with Finish Button -->
-  <div id="video-container" class="container hidden">
-    <video id="surprise-video" width="90%" controls autoplay>
-      <source src="https://files.catbox.moe/t28ds3.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
-    <h2>No matter what, I love you. I'm here when you're ready ❤️.</h2>
-    <button class="btn btn-green" onclick="showFinalOptions()">Finish</button>
-  </div>
-
-  <!-- Final Options Section -->
-  <div id="final-options" class="container hidden">
-    <h2>Please select one option below (You can only pick one):</h2>
-    <div id="final-options-container" style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-      <div class="final-option" id="optionA" onclick="selectOption('A')" style="cursor:pointer;">
-        <div style="font-size: 50px;">🎤</div>
-        <h3>LYRICS THAT REPRESENTS YOU</h3>
-        <p>
-          You know it's not the same as it was - Harry Styles<br>
-          I think we talked about a TV show that you liked. Something I forgot cos I was thinking "whoa, her eyes are real?" - BWU<br>
-          I lose my brain cells when I'm with you - Boywithuke<br>
-          I fell through the fuckin room when I saw you walking through the hallway zone - BWU<br>
-          It's the reason I'm afraid, you're the thoughts that can't be tamed and I'm trying to be sane - Dream<br>
-          Sorry but I can't just stop liking you, I hope these other guys won't see you as pretty as I do - BWU<br>
-          I'll see you soon 'cause I miss you - BWU<br>
-          Please don't break my heart - BWU<br>
-          I know I might seem childish coding this - BWU<br>
-          This ain't good for my health, no this ain't good for my health - BWU<br>
-          (More to come...)
-        </p>
-      </div>
-      <div class="final-option" id="optionB" onclick="selectOption('B')" style="cursor:pointer;">
-        <div style="font-size: 50px;">📈</div>
-        <h3>HOW EBUKA HAS BEEN DOING</h3>
-        <p>(These past few days)</p>
-      </div>
-      <div class="final-option" id="optionC" onclick="selectOption('C')" style="cursor:pointer;">
-        <div style="font-size: 50px;">📖</div>
-        <h3>THE STORY OF WHAT HAPPENED</h3>
-        <p>(The truth revealed)</p>
-      </div>
-    </div>
-    <p id="final-indicator" style="color: lightgreen; font-weight: bold; margin-top: 10px;"></p>
-  </div>
-
-  <!-- Background Music -->
-  <audio id="background-music" loop>
-    <source src="https://files.catbox.moe/j0odtp.mp3" type="audio/mp3">
-  </audio>
-
-  <script>
-    // Typing effect function for epistles
-    function typeText(element, text, speed) {
-      element.innerHTML = "";
-      let i = 0;
-      let interval = setInterval(() => {
-        if (i < text.length) {
-          element.innerHTML += text.charAt(i);
-          i++;
-        } else {
-          clearInterval(interval);
-        }
-      }, speed);
-    }
-    
-    // Epistle texts
-    const epistle1Text = "Moyin,\nAt this point, if you ever leave me, I'd be in total devastation. I trust you with everything, and I just hope you never give me a reason to regret it. I love you more than words can say. I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.\nYou mean the absolute world to me, and I don’t take you for granted. I love you more than words can express, and I just want to make things right between us. I’ve left my guard down completely for you, and if you ever left, I'd be devastated. You’re the one I trust with everything, and I never want to do anything to make you regret choosing me.\nPlease forgive me, Moyin. You’re too special to me to let this come between us. 💙";
-    
-    const epistle2Text = "My girl, I seriously want you to know no one can ever take your place. You're my first and only love. I have fallen so deeply in love with you that I can't even process it—you literally control my emotions, and when I realized it, I just thought, \"Wow, I'm cooked.\" This is what falling in love feels like.\nRemember when I told you I wasn't going all out because I was still keeping my guard up? You convinced me to let it down, and I love you regardless. I could let my friendship with anyone go because of you; you're my number one person.\nI want you to know how special you are to me. I admit my mistakes—I didn't consider your feelings, and I know you wouldn't do the same to me. I'm truly sorry for what I did. I'm sorry for not telling you, not listening, and not considering you. Now please come back to me, baby, and release me from my punishment. 😔💔";
-    
-    // Pre-Check Logic
-    function init() {
-      document.getElementById("pre-check").style.display = "block";
-      // Attach video event listeners for music pause/resume.
-      const videoElem = document.getElementById("surprise-video");
-      if(videoElem) {
-        videoElem.addEventListener("play", () => {
-          document.getElementById("background-music").pause();
-        });
-        videoElem.addEventListener("ended", () => {
-          document.getElementById("background-music").play();
-        });
-      }
-    }
-    
-    function choosePreCheck(option) {
-      if (option === 'HER') {
-        document.getElementById("pre-check").style.display = "none";
-        document.getElementById("security-check").style.display = "block";
-        showSecurityQuestion(1);
-      } else {
-        document.getElementById("pre-check").style.display = "none";
-        document.getElementById("denied").style.display = "block";
-      }
-    }
-    
-    // Security Check Logic
-    let correctSecAnswers = {1: 'A', 2: 'D', 3: 'C'};
-    let secCurrent = 1;
-    
-    function showSecurityQuestion(num) {
-      let secs = document.querySelectorAll(".security-question");
-      secs.forEach(sec => sec.style.display = "none");
-      let currentSec = document.getElementById("sec-q" + num);
-      if (currentSec) currentSec.style.display = "block";
-    }
-    
-    function checkSecAnswer(question, choice) {
-      if (correctSecAnswers[question] === choice) {
-        let indicator = document.getElementById("indicator-" + question);
-        indicator.textContent = "Correct!";
-        setTimeout(() => {
-          indicator.textContent = "";
-          secCurrent++;
-          if (secCurrent > 3) {
-            document.getElementById("security-check").style.display = "none";
-            // Show Welcome Screen
-            document.getElementById("welcome").style.display = "block";
-            setTimeout(() => {
-              document.getElementById("welcome").style.opacity = 1;
-              let music = document.getElementById("background-music");
-              music.play().catch(e => console.log(e));
-              setTimeout(() => {
-                document.getElementById("welcome").style.display = "none";
-                document.getElementById("memory-loading").style.display = "block";
-                setTimeout(() => {
-                  document.getElementById("memory-loading").style.display = "none";
-                  document.getElementById("memory-session").style.display = "block";
-                  currentMemory = 0;
-                  showMemory(currentMemory);
-                }, 7000); // 7 seconds loading
-              }, 3000);
-            }, 100);
-          } else {
-            showSecurityQuestion(secCurrent);
-          }
-        }, 1000);
-      } else {
-        document.getElementById("security-check").style.display = "none";
-        document.getElementById("imposter-screen").style.display = "block";
-      }
-    }
-    
-    // Memory Session Logic
-    let currentMemory = 0;
-    const memoryQuestions = document.querySelectorAll(".memory-question");
-    
-    function showMemory(index) {
-      memoryQuestions.forEach((mq, i) => {
-        mq.style.display = (i === index) ? "block" : "none";
-      });
-    }
-    
-    function nextMemory() {
-      currentMemory++;
-      if (currentMemory < memoryQuestions.length) {
-        showMemory(currentMemory);
-      }
-    }
-    
-    function finishMemory() {
-      document.getElementById("memory-session").style.display = "none";
-      // After 5 seconds, show Epistle 1 with typing effect
-      setTimeout(() => {
-        let epistle = document.getElementById("epistle1");
-        epistle.style.display = "block";
-        typeText(document.getElementById("epistle1-text"), epistle1Text, 50);
-      }, 5000);
-    }
-    
-    // Epistle 1 -> Interactive Questions Transition
-    function startInteractiveQuestions() {
-      document.getElementById("epistle1").style.display = "none";
-      document.getElementById("questions").style.display = "block";
-      currentQuestion = 0;
-      showQuestion(currentQuestion);
-    }
-    
-    // Interactive Questions Logic
-    let yesSize = 120, noSize = 120;
-    let currentQuestion;
-    const questionContainers = document.querySelectorAll(".question-container");
-    
-    function showQuestion(index) {
-      questionContainers.forEach((container, i) => {
-        container.style.display = (i === index) ? "block" : "none";
-      });
-    }
-    
-    function nextInteractive(answeredYes, btn) {
-      if (currentQuestion < questionContainers.length - 1) {
-        if (!answeredYes) {
-          yesSize += 20;
-          noSize = Math.max(noSize - 10, 40);
-          let container = questionContainers[currentQuestion];
-          let yesBtn = container.querySelector(".yes");
-          let noBtn = container.querySelector(".no");
-          yesBtn.style.width = yesSize + "px";
-          yesBtn.style.height = (yesSize * 0.5) + "px";
-          noBtn.style.width = noSize + "px";
-          noBtn.style.height = (noSize * 0.5) + "px";
-          if (Math.random() < 0.5) {
-            let parent = container;
-            parent.insertBefore(noBtn, yesBtn);
-          }
-        }
-        currentQuestion++;
-        showQuestion(currentQuestion);
-      }
-    }
-    
-    function finalInteractive(answeredYes) {
-      if (answeredYes) {
-        forgiveMe();
-      } else {
-        showEpistle2();
-      }
-    }
-    
-    function forgiveMe() {
-      document.getElementById("questions").style.display = "none";
-      document.getElementById("gif-container").style.display = "block";
-    }
-    
-    function showEpistle2() {
-      document.getElementById("questions").style.display = "none";
-      let epistle = document.getElementById("epistle2");
-      epistle.style.display = "block";
-      typeText(document.getElementById("epistle2-text"), epistle2Text, 50);
-    }
-    
-    function showVideo() {
-      document.getElementById("epistle2").style.display = "none";
-      document.getElementById("video-container").style.display = "block";
-    }
-    
-    // Final Options Logic
-    function showFinalOptions() {
-      document.getElementById("video-container").style.display = "none";
-      document.getElementById("final-options").style.display = "block";
-    }
-    
-    function selectOption(option) {
-      let options = document.querySelectorAll(".final-option");
-      options.forEach(opt => opt.style.pointerEvents = "none");
-      document.getElementById("final-indicator").textContent = "You have selected option " + option + ".";
-    }
-  </script>
-</body>
-</html>
+This combined version restores visible epistles, the green/red Yes/No buttons, and centers the content. Let me know if you need any further adjustments!
