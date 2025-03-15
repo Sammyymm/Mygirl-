@@ -26,15 +26,12 @@
       background: rgba(0, 0, 0, 0.85);
       padding: 20px;
       border-radius: 10px;
-      margin: 10px auto;
+      margin: 20px auto;
     }
-    /* Hide elements by default */
     .hidden { display: none; }
-    /* Pre-Check Landing */
+    /* Pre-check, Denied, Security, Imposter, Welcome */
     #pre-check { }
-    /* Denied Screen */
     #denied { }
-    /* Security Check Section */
     #security-check { }
     .security-question { display: none; margin-bottom: 20px; }
     .sec-indicator { color: lightgreen; font-weight: bold; margin-top: 10px; }
@@ -50,14 +47,11 @@
       white-space: normal;
     }
     .option-btn.green { background: green; color: white; }
-    .option-btn.red   { background: red; color: white; }
-    /* Imposter Screen */
+    .option-btn.red { background: red; color: white; }
     #imposter-screen { }
-    /* Welcome Screen */
     #welcome { opacity: 0; transition: opacity 1s ease-in; }
-    /* Memory Loading Screen */
+    /* Memory Loading & Session */
     #memory-loading { }
-    /* Memory Session */
     #memory-session { }
     .memory-question { display: none; margin-bottom: 20px; }
     /* Epistle Sections */
@@ -66,7 +60,7 @@
 </head>
 <body onload="init()">
 
-  <!-- Pre-Check Landing Page -->
+  <!-- Pre-check Landing Page -->
   <div id="pre-check" class="container">
     <h2>THIS SITE IS ONLY FOR EBUKA'S GIRL!</h2>
     <p>Are you her or are you NAY?</p>
@@ -298,11 +292,9 @@
     }
     
     // Epistle texts
-    const epistle1Text = 
-"Moyin,\nAt this point, if you ever leave me, I'd be in total devastation. I trust you with everything, and I just hope you never give me a reason to regret it. I love you more than words can say. I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.\nYou mean the absolute world to me, and I don’t take you for granted. I love you more than words can express, and I just want to make things right between us. I’ve left my guard down completely for you, and if you ever left, I'd be devastated. You’re the one I trust with everything, and I never want to do anything to make you regret choosing me.\nPlease forgive me, Moyin. You’re too special to me to let this come between us. 💙";
+    const epistle1Text = "Moyin,\nAt this point, if you ever leave me, I'd be in total devastation. I trust you with everything, and I just hope you never give me a reason to regret it. I love you more than words can say. I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.\nYou mean the absolute world to me, and I don’t take you for granted. I love you more than words can express, and I just want to make things right between us. I’ve left my guard down completely for you, and if you ever left, I'd be devastated. You’re the one I trust with everything, and I never want to do anything to make you regret choosing me.\nPlease forgive me, Moyin. You’re too special to me to let this come between us. 💙";
     
-    const epistle2Text = 
-"My girl, I seriously want you to know no one can ever take your place. You're my first and only love. I have fallen so deeply in love with you that I can't even process it—you literally control my emotions, and when I realized it, I just thought, \"Wow, I'm cooked.\" This is what falling in love feels like.\nRemember when I told you I wasn't going all out because I was still keeping my guard up? You convinced me to let it down, and I love you regardless. I could let my friendship with anyone go because of you; you're my number one person.\nI want you to know how special you are to me. I admit my mistakes—I didn't consider your feelings, and I know you wouldn't do the same to me. I'm truly sorry for what I did. I'm sorry for not telling you, not listening, and not considering you. Now please come back to me, baby, and release me from my punishment. 😔💔";
+    const epistle2Text = "My girl, I seriously want you to know no one can ever take your place. You're my first and only love. I have fallen so deeply in love with you that I can't even process it—you literally control my emotions, and when I realized it, I just thought, \"Wow, I'm cooked.\" This is what falling in love feels like.\nRemember when I told you I wasn't going all out because I was still keeping my guard up? You convinced me to let it down, and I love you regardless. I could let my friendship with anyone go because of you; you're my number one person.\nI want you to know how special you are to me. I admit my mistakes—I didn't consider your feelings, and I know you wouldn't do the same to me. I'm truly sorry for what I did. I'm sorry for not telling you, not listening, and not considering you. Now please come back to me, baby, and release me from my punishment. 😔💔";
     
     // Pre-Check Logic
     function init() {
