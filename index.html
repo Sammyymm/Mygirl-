@@ -57,9 +57,9 @@
     /* Memory Session */
     #memory-session { display: none; }
     .memory-question { display: none; margin-bottom: 20px; }
-    /* Epistle Sections with Typing Effect */
+    /* Epistle Sections */
     #epistle1, #epistle2 { display: none; opacity: 0; transition: opacity 1s ease-in; }
-    /* Interactive Questions Section */
+    /* Interactive Questions Section (Forgiveness) */
     #questions { display: none; }
     .question-container { display: none; }
     .btn {
@@ -123,7 +123,6 @@
 <div id="security-check" class="container">
   <h2>Before you proceed...</h2>
   <p>We need to know if you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
-  
   <!-- Security Question 1 -->
   <div class="security-question" id="sec-q1">
     <h3>1. What's Taylor Swift's lucky number?</h3>
@@ -133,7 +132,6 @@
     <button class="option-btn" onclick="checkSecAnswer(1, 'D')">D. 15</button>
     <div class="sec-indicator" id="indicator-1"></div>
   </div>
-  
   <!-- Security Question 2 -->
   <div class="security-question" id="sec-q2">
     <h3>2. What color are Sammy's crush's eyes?</h3>
@@ -145,7 +143,6 @@
     </button>
     <div class="sec-indicator" id="indicator-2"></div>
   </div>
-  
   <!-- Security Question 3 -->
   <div class="security-question" id="sec-q3">
     <h3>3. What is Sammy's babe's favorite drink?</h3>
@@ -220,49 +217,41 @@
 
 <!-- Interactive Questions Section (Forgiveness) -->
 <div id="questions" class="container">
-  <!-- Question 1 -->
   <div class="question-container">
     <h3>Hey baby, I miss you, do you care to check up on me? 😔</h3>
     <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
     <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
-  <!-- Question 2 -->
   <div class="question-container">
     <h3>Wow, uhm, are you still mad at me?</h3>
     <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
     <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
-  <!-- Question 3 -->
   <div class="question-container">
     <h3>Do you want to talk with me?</h3>
     <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
     <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
-  <!-- Question 4 -->
   <div class="question-container">
     <h3>For reals?</h3>
     <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
     <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
-  <!-- Question 5 -->
   <div class="question-container">
     <h3>If I asked for a hug now, would you give me?</h3>
     <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
     <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
-  <!-- Question 6 -->
   <div class="question-container">
     <h3>Do you even miss me?</h3>
     <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
     <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
-  <!-- Question 7 -->
   <div class="question-container">
     <h3>Breaking down, while coding this... Uhm, can I call you?</h3>
     <button class="yes btn" onclick="nextInteractive(true, this)">Yes</button>
     <button class="no btn" onclick="nextInteractive(false, this)">No</button>
   </div>
-  <!-- Question 8 -->
   <div class="question-container">
     <h3>I miss you so much, do you wanna speak with me?</h3>
     <button class="yes btn" onclick="finalInteractive(true)">Yes</button>
@@ -357,7 +346,7 @@
   function init() {
     document.getElementById("pre-check").style.display = "block";
     
-    // Pause music when video plays, resume after video ends.
+    // Attach video event listeners for music pause/resume.
     const videoElem = document.getElementById("surprise-video");
     if(videoElem) {
       videoElem.addEventListener("play", () => {
@@ -406,10 +395,8 @@
           document.getElementById("welcome").style.display = "block";
           setTimeout(() => {
             document.getElementById("welcome").style.opacity = 1;
-            // Start background music
             let music = document.getElementById("background-music");
             music.play().catch(e => console.log(e));
-            // After 3 seconds, show Memory Loading Screen for 7 seconds
             setTimeout(() => {
               document.getElementById("welcome").style.display = "none";
               document.getElementById("memory-loading").style.display = "block";
@@ -418,7 +405,7 @@
                 document.getElementById("memory-session").style.display = "block";
                 currentMemory = 0;
                 showMemory(currentMemory);
-              }, 7000);
+              }, 7000); // 7 seconds loading
             }, 3000);
           }, 100);
         } else {
@@ -467,7 +454,7 @@
   }
   
   // Interactive Questions (Forgiveness) Logic
-  let currentQuestion = 0;
+  let currentQuestion; // Already declared above
   let yesSize = 120, noSize = 120; // in pixels
   const questionContainers = document.querySelectorAll(".question-container");
   
@@ -482,4 +469,9 @@
       if (!answeredYes) {
         yesSize += 20;
         noSize = Math.max(noSize - 10, 40);
-        let container = questionContain
+        let container = questionContainers[currentQuestion];
+        let yesBtn = container.querySelector(".yes");
+        let noBtn = container.querySelector(".no");
+        yesBtn.style.width = yesSize + "px";
+        yesBtn.style.height = (yesSize * 0.5) + "px";
+        noBtn.style.width = noSiz
