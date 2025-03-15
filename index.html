@@ -47,14 +47,22 @@
     }
     .green { background: green; }
     .red { background: red; }
+    /* Epistle styling for typing effect */
+    #epistle {
+      white-space: pre-line;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    /* Additional sections styling remains unchanged */
+    .question-container { display: none; }
+    #gif-container, #video-container { display: none; }
   </style>
 </head>
 <body>
 
-<!-- Pre-Security Check (Updated) -->
+<!-- Pre-Check Section (Updated) -->
 <div id="pre-check" class="container">
-  <p><strong>Purpose:</strong> Verify that the visitor is “Ebuka’s Girl” before proceeding.</p>
-  <p><strong>Display:</strong> THIS SITE IS ONLY FOR EBUKA'S GIRL!</p>
+  <h2>THIS SITE IS ONLY FOR EBUKA'S GIRL ARE YOU ...</h2>
   <button class="green" onclick="choosePreCheck('HER')">HER</button>
   <button class="red" onclick="choosePreCheck('NAY')">NAY</button>
 </div>
@@ -100,42 +108,45 @@
   <h2>Security check passed! Welcome baby.</h2>
 </div>
 
-<!-- Background Music Element -->  
-<audio id="background-music" loop>
-  <source src="https://files.catbox.moe/j0odtp.mp3" type="audio/mp3">
-</audio>
+<!-- Apology Letter (Epistle 1) with Typing Effect -->
+<div id="content" class="container hidden">
+  <h2>My Love, I'm Sorry...</h2>
+  <p id="epistle"></p>
+  <button onclick="startQuestions()">Continue</button>
+</div>
 
-<script>
-  let currentQuestion = 1;
-  const correctAnswers = { 1: 'A', 2: 'D', 3: 'C' };
-
-  function choosePreCheck(option) {
-    document.getElementById("pre-check").classList.add("hidden");
-    if (option === 'HER') {
-      document.getElementById("security-check").classList.remove("hidden");
-      document.getElementById("q1").classList.remove("hidden");
-    } else {
-      document.getElementById("denied").classList.remove("hidden");
-    }
-  }
-
-  function checkAnswer(qNum, answer) {
-    if (correctAnswers[qNum] === answer) {
-      if (qNum < 3) {
-        document.getElementById("q" + qNum).classList.add("hidden");
-        currentQuestion++;
-        document.getElementById("q" + currentQuestion).classList.remove("hidden");
-      } else {
-        document.getElementById("security-check").classList.add("hidden");
-        document.getElementById("welcome").classList.remove("hidden");
-        document.getElementById("background-music").play().catch(e => console.log(e));
-      }
-    } else {
-      document.getElementById("security-check").classList.add("hidden");
-      document.getElementById("denied").classList.remove("hidden");
-    }
-  }
-</script>
-
-</body>
-</html>
+<!-- Interactive Questions -->
+<div id="questions">
+  <div class="question-container">
+    <h3>Are you still mad at me? 🥹</h3>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onclick="nextQuestion(false)">No</button>
+  </div>
+  <div class="question-container">
+    <h3>For reals? 🤨</h3>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onclick="nextQuestion(false)">No</button>
+  </div>
+  <div class="question-container">
+    <h3>Do you think I deserve forgiveness? 😭</h3>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onclick="nextQuestion(false)">No</button>
+  </div>
+  <div class="question-container">
+    <h3>Do you miss me even a little? 😢</h3>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onclick="nextQuestion(false)">No</button>
+  </div>
+  <div class="question-container">
+    <h3>If I promise to make it up to you, will you forgive me? 💖</h3>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onclick="nextQuestion(false)">No</button>
+  </div>
+  <div class="question-container">
+    <h3>Remember how happy we are together? 🥰</h3>
+    <button class="yes" onclick="nextQuestion(true)">Yes</button>
+    <button class="no" onclick="nextQuestion(false)">No</button>
+  </div>
+  <div class="question-container">
+    <h3>Can we at least talk things out? 🥺</h3>
+    <button class="yes" onclick="forgiveMe()">Yes</button>\n    <button class="no" onclick="showVideo()">No</button>\n  </div>\n</div>\n\n<!-- GIF Response -->\n<div id=\"gif-container\" class=\"container hidden\">\n  <h2>Thank you so much babyyy! I've missed you! Now we need to talk, DM or call? ❤️</h2>\n  <img src=\"https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif\" alt=\"Cute gif\">\n</div>\n\n<!-- Surprise Video -->\n<div id=\"video-container\" class=\"container hidden\">\n  <video width=\"90%\" controls autoplay>\n      <source src=\"https://streamable.com/q7p0bq\" type=\"video/mp4\">\n      Your browser does not support the video tag.\n  </video>\n  <h2>No matter what, I love you. I'm here when you're ready ❤️.</h2>\n</div>\n\n<!-- Background Music -->\n<audio id=\"background-music\" loop>\n  <source src=\"https://files.catbox.moe/j0odtp.mp3\" type=\"audio/mp3\">\n</audio>\n\n<script>\n  let epistleText = `At this point, if you ever leave me, I'd be in total devastation.  \nI trust you with everything, and I just hope you never give me a reason to regret it.  \nI love you more than words can say.  I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.  \nYou mean the absolute world to me, and I don’t take you for granted.  \nPlease forgive me, moyin. You’re too special to me to let this come between us. 💙`;\n  let currentQuestion = 0;\n  const questions = document.querySelectorAll('.question-container');\n\n  function choosePreCheck(option) {\n    document.getElementById('pre-check').classList.add('hidden');\n    if (option === 'HER') {\n      document.getElementById('security-check').classList.remove('hidden');\n      document.getElementById('q1').classList.remove('hidden');\n    } else {\n      document.getElementById('denied').classList.remove('hidden');\n    }\n  }\n\n  function checkAnswer(qNum, answer) {\n    const correctAnswers = { 1: 'A', 2: 'D', 3: 'C' };\n    if (correctAnswers[qNum] === answer) {\n      if (qNum < 3) {\n        document.getElementById('q' + qNum).classList.add('hidden');\n        currentQuestion++;\n        document.getElementById('q' + currentQuestion).classList.remove('hidden');\n      } else {\n        document.getElementById('security-check').classList.add('hidden');\n        document.getElementById('welcome').classList.remove('hidden');\n        // When security check passes, start background music\n        document.getElementById('background-music').play().catch(e => console.log(e));\n      }\n    } else {\n      document.getElementById('security-check').classList.add('hidden');\n      document.getElementById('denied').classList.remove('hidden');\n    }\n  }\n\n  // Security Passed Welcome Screen (not in original steps 1-3, but used for transition)\n  function securityPassed() {\n    document.getElementById('security-check').classList.add('hidden');\n    document.getElementById('welcome').classList.remove('hidden');\n    document.getElementById('background-music').play().catch(e => console.log(e));\n  }\n\n  // Epistle Typing Effect\n  function typeEpistle() {\n    let i = 0;\n    const epistleElement = document.getElementById('epistle');\n    epistleElement.textContent = \"\";\n    function type() {\n      if (i < epistleText.length) {\n        epistleElement.textContent += epistleText[i];\n        i++;\n        setTimeout(type, 50);\n      }\n    }\n    type();\n  }\n\n  function startQuestions() {\n    document.getElementById('content').classList.add('hidden');\n    questions[currentQuestion].style.display = 'block';\n  }\n\n  function nextQuestion(answeredYes) {\n    questions[currentQuestion].style.display = 'none';\n    currentQuestion++;\n    if (currentQuestion < questions.length) {\n      questions[currentQuestion].style.display = 'block';\n      if (!answeredYes) {\n        // Example: add resizing effects if desired\n      }\n    } else {\n      showVideo();\n    }\n  }\n\n  function forgiveMe() {\n    document.getElementById('questions').classList.add('hidden');\n    document.getElementById('gif-container').classList.remove('hidden');\n  }\n\n  function showVideo() {\n    document.getElementById('questions').classList.add('hidden');\n    document.getElementById('video-container').classList.remove('hidden');\n  }\n\n  // Initially, show the pre-check\n  document.getElementById('pre-check').style.d
