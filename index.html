@@ -474,4 +474,53 @@
         let noBtn = container.querySelector(".no");
         yesBtn.style.width = yesSize + "px";
         yesBtn.style.height = (yesSize * 0.5) + "px";
-        noBtn.style.width = noSiz
+        noBtn.style.width = noSize + "px";
+        noBtn.style.height = (noSize * 0.5) + "px";
+        // Randomly swap positions:
+        if (Math.random() < 0.5) {
+          let parent = container;
+          parent.insertBefore(noBtn, yesBtn);
+        }
+      }
+      currentQuestion++;
+      showQuestion(currentQuestion);
+    }
+  }
+
+  function finalInteractive(answeredYes) {
+    if (answeredYes) {
+      forgiveMe();
+    } else {
+      showEpistle2();
+    }
+  }
+
+  function forgiveMe() {
+    document.getElementById("questions").style.display = "none";
+    document.getElementById("gif-container").style.display = "block";
+  }
+
+  function showEpistle2() {
+    document.getElementById("questions").style.display = "none";
+    let epistle = document.getElementById("epistle2");
+    epistle.style.display = "block";
+    typeText(document.getElementById("epistle2-text"), epistle2Text, 50);
+  }
+
+  function showVideo() {
+    document.getElementById("epistle2").style.display = "none";
+    document.getElementById("video-container").style.display = "block";
+  }
+
+  // Final Options Logic
+  function showFinalOptions() {
+    document.getElementById("video-container").style.display = "none";
+    document.getElementById("final-options").style.display = "block";
+  }
+
+  function selectOption(option) {
+    let options = document.querySelectorAll(".final-option");
+    options.forEach(opt => opt.style.pointerEvents = "none");
+    document.getElementById("final-indicator").textContent = "You have selected option " + option + ".";
+    // Optionally store the selection if needed.
+  }
