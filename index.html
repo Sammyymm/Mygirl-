@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I'm Sorry, My Love - Step 1-3</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>I'm Sorry, My Love - Steps 1 to 3</title>
   <style>
+    /* Basic Page Styling */
     body {
       margin: 0;
       padding: 0;
@@ -17,6 +18,7 @@
       align-items: center;
       min-height: 100vh;
       text-align: center;
+      transition: opacity 1s;
     }
     .container {
       width: 90%;
@@ -24,8 +26,12 @@
       background: rgba(0, 0, 0, 0.85);
       padding: 20px;
       border-radius: 10px;
-      margin: 20px;
+      margin: 20px auto;
     }
+    .hidden {
+      display: none;
+    }
+    /* Button styling */
     button {
       padding: 10px 20px;
       margin: 10px;
@@ -36,8 +42,12 @@
     }
     .green { background: green; color: white; }
     .red { background: red; color: white; }
-    .hidden { display: none; }
-    .question { margin: 20px 0; }
+    /* Question styling */
+    .question {
+      margin: 20px 0;
+    }
+    h2 { color: gold; }
+    h3 { color: cyan; }
   </style>
 </head>
 <body>
@@ -57,8 +67,8 @@
 
   <!-- Security Check Section -->
   <div id="security" class="container hidden">
-    <h2>Security Check</h2>
-    <p>We need to verify you're Ebuka's girl!</p>
+    <h2>Before you proceed...</h2>
+    <p>We need to verify you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
     <!-- Security Question 1 -->
     <div id="q1" class="question">
       <h3>1. What's Taylor Swift's lucky number?</h3>
@@ -90,9 +100,14 @@
     <h2>Security check passed! Welcome baby.</h2>
   </div>
 
+  <!-- Background Music Element -->  
+  <audio id="background-music" loop>
+    <source src="https://files.catbox.moe/j0odtp.mp3" type="audio/mp3">
+  </audio>
+
   <script>
     let currentQuestion = 1;
-    // Define correct answers: Q1: A, Q2: D, Q3: C
+    // Define the correct answers for the security questions:
     const correctAnswers = { 1: 'A', 2: 'D', 3: 'C' };
 
     function choosePreCheck(option) {
@@ -114,138 +129,11 @@
           currentQuestion++;
           document.getElementById("q" + currentQuestion).classList.remove("hidden");
         } else {
-          // All questions answered correctly: hide security check and show welcome
+          // All questions answered correctly: hide security section, show welcome, and play music
           document.getElementById("security").classList.add("hidden");
           document.getElementById("welcome").classList.remove("hidden");
-        }
-      } else {
-        // Wrong answer: show denied screen
-        document.getElementById("security").classList.add("hidden");
-        document.getElementById("denied").classList.remove("hidden");
-      }
-    }
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>I'm Sorry, My Love - Step 1-3</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('https://files.catbox.moe/qzs95x.jpeg') no-repeat center center/cover;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-    }
-    .container {
-      width: 90%;
-      max-width: 600px;
-      background: rgba(0, 0, 0, 0.85);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .green { background: green; color: white; }
-    .red { background: red; color: white; }
-    .hidden { display: none; }
-    .question { margin: 20px 0; }
-  </style>
-</head>
-<body>
-  <!-- Pre-Check Landing Page -->
-  <div id="precheck" class="container">
-    <h2>THIS SITE IS ONLY FOR EBUKA'S GIRL!</h2>
-    <p>Are you her or are you NAY?</p>
-    <button class="green" onclick="choosePreCheck('HER')">HER</button>
-    <button class="red" onclick="choosePreCheck('NAY')">NAY</button>
-  </div>
-
-  <!-- Denied Screen -->
-  <div id="denied" class="container hidden">
-    <h2>Access Denied!</h2>
-    <p>Sorry, you are not authorized to access this site.</p>
-  </div>
-
-  <!-- Security Check Section -->
-  <div id="security" class="container hidden">
-    <h2>Security Check</h2>
-    <p>We need to verify you're Ebuka's girl!</p>
-    <!-- Security Question 1 -->
-    <div id="q1" class="question">
-      <h3>1. What's Taylor Swift's lucky number?</h3>
-      <button onclick="checkAnswer(1, 'A')">A. 13</button>
-      <button onclick="checkAnswer(1, 'B')">B. 27</button>
-      <button onclick="checkAnswer(1, 'C')">C. 22</button>
-      <button onclick="checkAnswer(1, 'D')">D. 15</button>
-    </div>
-    <!-- Security Question 2 -->
-    <div id="q2" class="question hidden">
-      <h3>2. What color are Sammy's crush's eyes?</h3>
-      <button onclick="checkAnswer(2, 'A')">A. Green</button>
-      <button onclick="checkAnswer(2, 'B')">B. Yellow</button>
-      <button onclick="checkAnswer(2, 'C')">C. Black</button>
-      <button onclick="checkAnswer(2, 'D')">D. Mesmerizing, breathtaking, definition of sunrise, warm and full of love, the power to leave me speechless, the color of every beautiful thing.</button>
-    </div>
-    <!-- Security Question 3 -->
-    <div id="q3" class="question hidden">
-      <h3>3. What is Sammy's babe's favorite drink?</h3>
-      <button onclick="checkAnswer(3, 'A')">A. Fanta</button>
-      <button onclick="checkAnswer(3, 'B')">B. Malt</button>
-      <button onclick="checkAnswer(3, 'C')">C. Chapman</button>
-      <button onclick="checkAnswer(3, 'D')">D. Orange Juice</button>
-    </div>
-  </div>
-
-  <!-- Welcome Screen -->
-  <div id="welcome" class="container hidden">
-    <h2>Security check passed! Welcome baby.</h2>
-  </div>
-
-  <script>
-    let currentQuestion = 1;
-    // Define correct answers: Q1: A, Q2: D, Q3: C
-    const correctAnswers = { 1: 'A', 2: 'D', 3: 'C' };
-
-    function choosePreCheck(option) {
-      document.getElementById("precheck").classList.add("hidden");
-      if (option === 'HER') {
-        document.getElementById("security").classList.remove("hidden");
-        // Show question 1
-        document.getElementById("q1").classList.remove("hidden");
-      } else {
-        document.getElementById("denied").classList.remove("hidden");
-      }
-    }
-
-    function checkAnswer(qNum, answer) {
-      if (correctAnswers[qNum] === answer) {
-        if (qNum < 3) {
-          // Hide current question and show next question
-          document.getElementById("q" + qNum).classList.add("hidden");
-          currentQuestion++;
-          document.getElementById("q" + currentQuestion).classList.remove("hidden");
-        } else {
-          // All questions answered correctly: hide security check and show welcome
-          document.getElementById("security").classList.add("hidden");
-          document.getElementById("welcome").classList.remove("hidden");
+          // Play background music
+          document.getElementById("background-music").play().catch(e => console.log(e));
         }
       } else {
         // Wrong answer: show denied screen
