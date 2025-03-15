@@ -12,7 +12,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('https://streamable.com/q7p0bq') no-repeat center center/cover;
+            background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
             text-align: center;
             font-family: Arial, sans-serif;
             color: white;
@@ -30,14 +30,18 @@
             display: none;
         }
         button {
-            background: pink;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
             border: none;
             padding: 10px;
             margin: 10px;
             font-size: 18px;
             cursor: pointer;
             border-radius: 5px;
+            color: white;
             transition: all 0.3s ease;
+        }
+        button:hover {
+            background: linear-gradient(to right, #ff512f, #dd2476);
         }
         .shrinking {
             transform: scale(0.8);
@@ -53,22 +57,29 @@
             font-size: 16px;
             line-height: 1.5;
         }
+        .security-step {
+            font-weight: bold;
+            color: #ffde59;
+        }
     </style>
 </head>
 <body>
 
-<!-- Pre-Check -->
+<!-- Pre-Security Questions -->
 <div id="pre-check">
-    <h2>Pre-Check</h2>
-    <p>Please confirm you’re ready to proceed.</p>
-    <button onclick="showSecurityCheck()">Proceed</button>
+    <h2>Pre-Security Check</h2>
+    <p>Let's see if you're truly ready for this!</p>
+    <p class="security-step">1. Are you sure you want to proceed?</p>
+    <button onclick="preCheckAnswer(true)">Yes</button>
+    <button onclick="preCheckAnswer(false)">No</button>
 </div>
 
 <!-- Security Check -->
 <div id="security-check">
     <h2>Security Clearance</h2>
-    <p>Are you ready to accept this heartfelt apology?</p>
-    <button onclick="securityPassed()">Yes</button>
+    <p>Are you **100% sure** you're ready to hear my heartfelt apology?</p>
+    <button onclick="securityPassed()">Yes, go ahead</button>
+    <button onclick="securityFailed()">No, I need time</button>
 </div>
 
 <!-- Apology Letter -->
@@ -117,9 +128,13 @@
     let currentQuestion = 0;
     const questions = document.querySelectorAll('.question-container');
 
-    function showSecurityCheck() {
-        document.getElementById('pre-check').style.display = 'none';
-        document.getElementById('security-check').style.display = 'block';
+    function preCheckAnswer(answer) {
+        if (answer) {
+            document.getElementById('pre-check').style.display = 'none';
+            document.getElementById('security-check').style.display = 'block';
+        } else {
+            alert("Take your time. I'll be waiting. ❤️");
+        }
     }
 
     function securityPassed() {
@@ -127,6 +142,10 @@
         document.getElementById('content').style.display = 'block';
         document.getElementById('background-music').play();
         typeEpistle();
+    }
+
+    function securityFailed() {
+        alert("It's okay, my love. I'll wait for you. ❤️");
     }
 
     function typeEpistle() {
