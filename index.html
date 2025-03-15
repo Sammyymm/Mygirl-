@@ -1,166 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>I'm Sorry, My Love</title>
-  <style>
-    /* Basic Page Styling */
-    body {
-      margin: 0;
-      padding: 0;
-      background: url('https://files.catbox.moe/qzs95x.jpeg') no-repeat center center/cover;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      text-align: center;
-      transition: opacity 1s;
-    }
-    .container {
-      width: 90%;
-      max-width: 600px;
-      background: rgba(0, 0, 0, 0.85);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px auto;
-    }
-    .hidden { display: none; }
-    button {
-      padding: 10px 20px;
-      margin: 10px;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    .green { background: green; color: white; }
-    .red { background: red; color: white; }
-    h2 { color: gold; }
-    h3 { color: cyan; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>I'm Sorry, My Love</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://streamable.com/q7p0bq') no-repeat center center/cover;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            transition: opacity 1s;
+        }
+        #pre-check, #security-check, #content {
+            display: none;
+            width: 90%;
+            max-width: 600px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .question-container {
+            display: none;
+        }
+        button {
+            background: pink;
+            border: none;
+            padding: 10px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        .shrinking {
+            transform: scale(0.8);
+        }
+        .growing {
+            transform: scale(1.2);
+        }
+        #gif-container, #video-container {
+            display: none;
+        }
+        #epistle {
+            white-space: pre-line;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Pre-Check Landing Page -->
-  <div id="precheck" class="container">
-    <h2>THIS SITE IS ONLY FOR EBUKA'S GIRL!</h2>
-    <p>Are you her or are you NAY?</p>
-    <button class="green" onclick="choosePreCheck('HER')">HER</button>
-    <button class="red" onclick="choosePreCheck('NAY')">NAY</button>
-  </div>
+<!-- Pre-Check -->
+<div id="pre-check">
+    <h2>Pre-Check</h2>
+    <p>Please confirm you’re ready to proceed.</p>
+    <button onclick="showSecurityCheck()">Proceed</button>
+</div>
 
-  <!-- Denied Screen -->
-  <div id="denied" class="container hidden">
-    <h2>Access Denied!</h2>
-    <p>Sorry, you are not authorized to access this site.</p>
-  </div>
+<!-- Security Check -->
+<div id="security-check">
+    <h2>Security Clearance</h2>
+    <p>Are you ready to accept this heartfelt apology?</p>
+    <button onclick="securityPassed()">Yes</button>
+</div>
 
-  <!-- Security Check Section -->
-  <div id="security" class="container hidden">
-    <h2>Before you proceed...</h2>
-    <p>We need to verify you're Ebuka's girl – the one who controls his mood & emotions! 🥰</p>
-    <div id="q1" class="question">
-      <h3>1. What's Taylor Swift's lucky number?</h3>
-      <button onclick="checkAnswer(1, 'A')">A. 13</button>
-      <button onclick="checkAnswer(1, 'B')">B. 27</button>
-      <button onclick="checkAnswer(1, 'C')">C. 22</button>
-      <button onclick="checkAnswer(1, 'D')">D. 15</button>
+<!-- Apology Letter -->
+<div id="content">
+    <h2>My Love, I'm Sorry...</h2>
+    <p id="epistle"></p>
+    <button onclick="startQuestions()">Continue</button>
+</div>
+
+<!-- Interactive Questions -->
+<div id="questions">
+    <div class="question-container">
+        <h3>Are you still mad at me? 🥹</h3>
+        <button class="yes" onclick="nextQuestion(true)">Yes</button>
+        <button class="no" onclick="nextQuestion(false)">No</button>
     </div>
-    <div id="q2" class="question hidden">
-      <h3>2. What color are Sammy's crush's eyes?</h3>
-      <button onclick="checkAnswer(2, 'A')">A. Green</button>
-      <button onclick="checkAnswer(2, 'B')">B. Yellow</button>
-      <button onclick="checkAnswer(2, 'C')">C. Black</button>
-      <button onclick="checkAnswer(2, 'D')">D. Mesmerizing, breathtaking...</button>
-    </div>
-    <div id="q3" class="question hidden">
-      <h3>3. What is Sammy's babe's favorite drink?</h3>
-      <button onclick="checkAnswer(3, 'A')">A. Fanta</button>
-      <button onclick="checkAnswer(3, 'B')">B. Malt</button>
-      <button onclick="checkAnswer(3, 'C')">C. Chapman</button>
-      <button onclick="checkAnswer(3, 'D')">D. Orange Juice</button>
-    </div>
-  </div>
+</div>
 
-  <!-- Epistle (Apology Letter) -->
-  <div id="epistle" class="container hidden">
-    <h2>My Love, I'm Deeply Sorry</h2>
-    <p>My love, I don't even know how to start, but please know that everything I say here comes from my heart...</p>
-    <button class="green" onclick="showInteractiveQuestion()">Next</button>
-  </div>
+<!-- GIF Response -->
+<div id="gif-container">
+    <h2>Thank you so much babyyy! ❤️</h2>
+    <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif" alt="Cute gif">
+</div>
 
-  <!-- Interactive Question Flow -->
-  <div id="interactive" class="container hidden">
-    <h2>Are you still mad at me? 🥹</h2>
-    <button class="green" onclick="nextQuestion('no')">No</button>
-    <button class="red" onclick="nextQuestion('yes')">Yes</button>
-  </div>
-  <div id="verify-no" class="container hidden">
-    <h2>For reals? 😳</h2>
-    <button class="green" onclick="nextQuestion('forreals')">Yes</button>
-    <button class="red" onclick="nextQuestion('no')">No</button>
-  </div>
-  <div id="talk" class="container hidden">
-    <h2>Do you want to talk to me? 😢</h2>
-    <button class="green" onclick="nextQuestion('talk')">Yes</button>
-    <button class="red" onclick="nextQuestion('no')">No</button>
-  </div>
-  <div id="surprise" class="container hidden">
-    <h2>Baby, no matter what... I LOVE YOU! 💕</h2>
-    <p>I'm never giving up on us.</p>
-  </div>
+<!-- Surprise Video -->
+<div id="video-container">
+    <video width="90%" controls autoplay>
+        <source src="https://streamable.com/q7p0bq" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+    <h2>No matter what, I love you. ❤️</h2>
+</div>
 
-  <!-- Background Music -->
-  <audio id="background-music" loop>
+<!-- Background Music -->
+<audio id="background-music" loop>
     <source src="https://files.catbox.moe/j0odtp.mp3" type="audio/mp3">
-  </audio>
+</audio>
 
-  <script>
-    let currentQuestion = 1;
-    const correctAnswers = { 1: 'A', 2: 'D', 3: 'C' };
+<script>
+    let epistleText = `At this point, if you ever leave me, I'd be in total devastation.  
+    I trust you with everything, and I just hope you never give me a reason to regret it.  
+    I love you more than words can say.  I know I messed up, and I deeply regret it. The last thing I ever want is to make you feel unappreciated, unheard, or hurt.  
+    You mean the absolute world to me, and I don’t take you for granted.  
+    Please forgive me, moyin. You’re too special to me to let this come between us. 💙`;
 
-    function choosePreCheck(option) {
-      document.getElementById("precheck").classList.add("hidden");
-      if (option === 'HER') {
-        document.getElementById("security").classList.remove("hidden");
-        document.getElementById("q1").classList.remove("hidden");
-      } else {
-        document.getElementById("denied").classList.remove("hidden");
-      }
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll('.question-container');
+
+    function showSecurityCheck() {
+        document.getElementById('pre-check').style.display = 'none';
+        document.getElementById('security-check').style.display = 'block';
     }
 
-    function checkAnswer(qNum, answer) {
-      if (correctAnswers[qNum] === answer) {
-        if (qNum < 3) {
-          document.getElementById("q" + qNum).classList.add("hidden");
-          currentQuestion++;
-          document.getElementById("q" + currentQuestion).classList.remove("hidden");
-        } else {
-          document.getElementById("security").classList.add("hidden");
-          document.getElementById("epistle").classList.remove("hidden");
-          document.getElementById("background-music").play();
+    function securityPassed() {
+        document.getElementById('security-check').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+        document.getElementById('background-music').play();
+        typeEpistle();
+    }
+
+    function typeEpistle() {
+        let i = 0;
+        let epistleElement = document.getElementById('epistle');
+        epistleElement.textContent = "";
+
+        function type() {
+            if (i < epistleText.length) {
+                epistleElement.textContent += epistleText[i];
+                i++;
+                setTimeout(type, 50);
+            }
         }
-      } else {
-        document.getElementById("security").classList.add("hidden");
-        document.getElementById("denied").classList.remove("hidden");
-      }
+        type();
     }
 
-    function showInteractiveQuestion() {
-      document.getElementById("epistle").classList.add("hidden");
-      document.getElementById("interactive").classList.remove("hidden");
+    function startQuestions() {
+        document.getElementById('content').style.display = 'none';
+        questions[currentQuestion].style.display = 'block';
     }
 
-    function nextQuestion(answer) {
-      document.querySelectorAll('.container').forEach(div => div.classList.add('hidden'));
-      if (answer === 'yes') document.getElementById("talk").classList.remove("hidden");
-      else if (answer === 'forreals') document.getElementById("surprise").classList.remove("hidden");
-      else document.getElementById("verify-no").classList.remove("hidden");
+    function nextQuestion(answeredYes) {
+        questions[currentQuestion].style.display = 'none';
+        currentQuestion++;
+        
+        if (currentQuestion < questions.length) {
+            questions[currentQuestion].style.display = 'block';
+        } else {
+            showVideo();
+        }
     }
-  </script>
+
+    function forgiveMe() {
+        document.getElementById('questions').style.display = 'none';
+        document.getElementById('gif-container').style.display = 'block';
+    }
+
+    function showVideo() {
+        document.getElementById('questions').style.display = 'none';
+        document.getElementById('video-container').style.display = 'block';
+    }
+
+    // Start with pre-check visible
+    document.getElementById('pre-check').style.display = 'block';
+</script>
+
 </body>
 </html>
